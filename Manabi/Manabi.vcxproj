@@ -133,6 +133,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Renderer.cpp" />
+    <ClCompile Include="Source\GameObjectManager.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\glad.c" />
@@ -142,6 +144,8 @@
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Renderer.h" />
+    <ClInclude Include="Source\GameObjectManager.h" />
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Application.h" />
