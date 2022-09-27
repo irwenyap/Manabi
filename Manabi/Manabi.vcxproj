@@ -133,10 +133,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Renderer.cpp" />
-    <ClCompile Include="Source\GameObjectManager.cpp" />
-    <ClCompile Include="Source\GameObject.cpp" />
+    <ClCompile Include="System\PhysicsSystem.cpp" />
+    <ClCompile Include="System\RenderSystem.cpp" />
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\glad.c" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
@@ -144,14 +144,26 @@
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Renderer.h" />
-    <ClInclude Include="Source\GameObjectManager.h" />
+    <ClInclude Include="Components\Camera.h" />
+    <ClInclude Include="Components\Renderer.h" />
+    <ClInclude Include="Components\Rigidbody.hpp" />
+    <ClInclude Include="Components\Transform.hpp" />
+    <ClInclude Include="System\PhysicsSystem.h" />
+    <ClInclude Include="System\RenderSystem.h" />
+    <ClInclude Include="Source\ComponentArray.h" />
+    <ClInclude Include="Source\ComponentPool.h" />
+    <ClInclude Include="Source\Coordinator.h" />
+    <ClInclude Include="Source\ComponentManager.h" />
+    <ClInclude Include="Source\EntityManager.h" />
+    <ClInclude Include="Source\Entity.h" />
     <ClInclude Include="Source\Component.h" />
-    <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\Shader.h" />
+    <ClInclude Include="Source\Signature.h" />
     <ClInclude Include="Source\stb_image.h" />
+    <ClInclude Include="Source\System.h" />
+    <ClInclude Include="Source\SystemManager.h" />
     <ClInclude Include="Source\TestScene.h" />
     <ClInclude Include="Source\Window.h" />
   </ItemGroup>

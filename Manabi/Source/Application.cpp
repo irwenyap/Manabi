@@ -3,7 +3,6 @@
 #include "Application.h"
 #include "Shader.h"
 
-
 #include "TestScene.h"
 
 Application::Application() 
@@ -32,7 +31,6 @@ void Application::Run() {
 	while (!glfwWindowShouldClose(m_context->GetWindow())) {
 
 		scene->Update(m_timer.GetDeltaTime());
-		scene->Render();
 
 		m_context->SwapBuffers();
 		glfwPollEvents();

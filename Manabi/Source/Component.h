@@ -1,13 +1,9 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-class Component {
-public:
-	Component();
-	~Component();
+#include <stdint.h>
 
-	virtual void Initialize() = 0;
-	virtual void Destroy();
-};
+using ComponentType = uint8_t;
+const ComponentType MAX_COMPONENTS = 128;
 
 #endif // !COMPONENT_H
