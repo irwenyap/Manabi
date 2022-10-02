@@ -1,6 +1,8 @@
 #include "TestScene.h"
 #include <glad/glad.h>
 #include "Shader.h"
+#include "../Components/Renderer.h"
+#include "../Components/Camera.h"
 #include "../Components/Transform.hpp"
 
 Coordinator g_coordinator;
@@ -16,11 +18,13 @@ void TestScene::Initialize() {
 	g_coordinator.Initialize();
 
 	g_coordinator.RegisterComponent<Transform>();
+	g_coordinator.RegisterComponent<Renderer>();
+	g_coordinator.RegisterComponent<Camera>();
 
 	renderSystem = g_coordinator.RegisterSystem<RenderSystem>();
 	{
 		Signature signature;
-		signature.set(g_coordinator.GetComponentType<Transform>());
+		signature.set(g_coordinator.GetComponentType<Renderer>());
 		g_coordinator.SetSystemSignature<RenderSystem>(signature);
 	}
 
@@ -30,8 +34,7 @@ void TestScene::Initialize() {
 
 	for (auto& entity : entities) {
 		entity = g_coordinator.CreateEntity();
-		g_coordinator.AddComponent(entity, Transform{});
-
+		g_coordinator.AddComponent(entity, Renderer{new Mesh, "../Models/cube.obj" });
 	}
 }
 

@@ -108,6 +108,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/Core/Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,6 +134,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\LoadOBJ.cpp" />
+    <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="System\PhysicsSystem.cpp" />
     <ClCompile Include="System\RenderSystem.cpp" />
     <ClCompile Include="Source\Application.cpp" />
@@ -148,6 +151,9 @@
     <ClInclude Include="Components\Renderer.h" />
     <ClInclude Include="Components\Rigidbody.hpp" />
     <ClInclude Include="Components\Transform.hpp" />
+    <ClInclude Include="Source\LoadOBJ.h" />
+    <ClInclude Include="Source\Mesh.h" />
+    <ClInclude Include="Source\Vertex.h" />
     <ClInclude Include="System\PhysicsSystem.h" />
     <ClInclude Include="System\RenderSystem.h" />
     <ClInclude Include="Source\ComponentArray.h" />

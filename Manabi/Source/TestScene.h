@@ -19,7 +19,7 @@ public:
 	virtual void Exit();
 
 private:
-	MS modelStack, viewStack, projectionStack;
+	//MS modelStack, viewStack, projectionStack;
 
 	std::shared_ptr<RenderSystem> renderSystem;
 

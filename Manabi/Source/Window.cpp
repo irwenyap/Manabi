@@ -36,6 +36,7 @@ void Window::Init() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+
 	m_window = glfwCreateWindow(1920, 1080, "Venture", NULL, NULL);
 	if (m_window == NULL) {
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -47,5 +48,5 @@ void Window::Init() {
 
 	glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
 
-
+	glEnable(GL_DEPTH_TEST);
 }

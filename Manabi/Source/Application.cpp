@@ -34,6 +34,8 @@ void Application::Run() {
 
 		m_context->SwapBuffers();
 		glfwPollEvents();
+
+		m_timer.Update();
 	}
 	//glDeleteVertexArrays(1, &VAO);
 	//glDeleteBuffers(1, &VBO);
@@ -44,4 +46,8 @@ void Application::Run() {
 void Application::Exit() {
 	delete(m_context);
 	glfwTerminate();
+}
+
+bool Application::IsKeyPressed(unsigned short key) {
+	return ((GetAsyncKeyState(key) & 0x8001) != 0);
 }
