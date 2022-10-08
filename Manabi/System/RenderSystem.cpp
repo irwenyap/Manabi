@@ -158,29 +158,55 @@ void RenderSystem::Initialize() {
 
 	shader.Use();
 
-	Mtx44 projection;
-	projection.SetToIdentity();
-	projection.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 1000.0f);
-
-	shader.SetMat4("projection", projection);
+	shader.SetMat4("projection", camera.projection_matrix);
 }
 
 void RenderSystem::Update(double dt) {
 
+	// Camera
 	if (Application::IsKeyPressed('W')) {
-		camera.position += 2.0f * Vector3(0, 0, -1) * dt;
+		camera.position += 2.0f * camera.target * dt;
 	}
 	if (Application::IsKeyPressed('A')) {
-		camera.position -= 2.0f * (Vector3(0, 0, -1).Cross(camera.up)).Normalize() * dt;
+		camera.position -= 2.0f * (camera.target.Cross(camera.up)).Normalize() * dt;
 	}	
 	if (Application::IsKeyPressed('S')) {
-		camera.position -= 2.0f * Vector3(0, 0, -1) * dt;
+		camera.position -= 2.0f * camera.target * dt;
 	}	
 	if (Application::IsKeyPressed('D')) {
-		camera.position += 2.0f * (Vector3(0, 0, -1).Cross(camera.up)).Normalize() * dt;
+		camera.position += 2.0f * (camera.target.Cross(camera.up)).Normalize() * dt;
 	}
 
+	{
+		float xPos = static_cast<float>(Application::mouse_current_x);
+		float yPos = static_cast<float>(Application::mouse_current_y);
 
+		float xOffSet = xPos - camera.lastX;
+		float yOffSet = yPos - camera.lastY;
+		camera.lastX = xPos;
+		camera.lastY = yPos;
+
+		float sensitivity = 0.1f;
+		xOffSet *= sensitivity;
+		yOffSet *= sensitivity;
+
+		camera.yaw += xOffSet;
+		camera.pitch += yOffSet;
+
+
+		if (camera.pitch > 89.0f)
+			camera.pitch = 89.0f;
+		if (camera.pitch < -89.0f)
+			camera.pitch = -89.0f;
+
+		Vector3 front;
+		front.x = cos(Math::DegreeToRadian(camera.yaw));// cos(Math::DegreeToRadian(camera.pitch));
+		front.y = sin(Math::DegreeToRadian(camera.pitch));
+		front.z = -sin(Math::DegreeToRadian(camera.yaw));// * cos(Math::DegreeToRadian(camera.pitch));
+
+		std::cout << front << std::endl;
+		camera.target = front;
+	}
 
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -191,12 +217,11 @@ void RenderSystem::Update(double dt) {
 
 	Mtx44 view;
 	view.SetToIdentity();
-	//view.SetToTranslation(0.0f, 0.0f, -3.0f);
-	//float radius = 10.0f;
-	//float camX = static_cast<float>(sin(glfwGetTime()) * radius);
-	//float camZ = static_cast<float>(cos(glfwGetTime()) * radius);
-	view.SetToLookAt(camera.position.x, camera.position.y, camera.position.z, 
-		camera.position.x + 0, camera.position.y + 0, camera.position.z + -1,
+//	view.SetToLookAt(camera.position.x, camera.position.y, camera.position.z, 
+//		camera.position.x + camera.target.x, camera.position.y + camera.target.y, camera.position.z - camera.target.z,
+//		camera.up.x, camera.up.y, camera.up.z);
+	view.SetToLookAt(camera.position.x, camera.position.y, camera.position.z,
+		camera.position.x + camera.target.x, camera.position.y + camera.target.y, camera.position.z + camera.target.z,
 		camera.up.x, camera.up.y, camera.up.z);
 	//shader.SetMat4("model", model);
 	shader.SetMat4("view", view);

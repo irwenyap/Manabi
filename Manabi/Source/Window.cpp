@@ -4,11 +4,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
-void input_callback(GLFWwindow* window) {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
-}
-
 Window::Window(const char* title, int width, int height) {
 	m_window = nullptr;
 	m_title = title;
@@ -49,4 +44,5 @@ void Window::Init() {
 	glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
 
 	glEnable(GL_DEPTH_TEST);
+	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }

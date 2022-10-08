@@ -14,6 +14,9 @@ struct Camera {
 	Vector3 up;
 	Vector3 right;
 
+	float yaw, pitch;
+	float lastX, lastY;
+
 	void SetVars() {
 		direction = (target - position).Normalized();
 		right = direction.Cross(Vector3(0, 1, 0));

@@ -5,8 +5,16 @@
 
 #include "TestScene.h"
 
+Window* Application::m_context = nullptr;
+double Application::mouse_current_x = 0.0, Application::mouse_current_y = 0.0;
+
+//Shortcut to be changed
+void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
+	Application::mouse_current_x = xposIn;
+	Application::mouse_current_y = yposIn;
+}
+
 Application::Application() 
-	: m_context(nullptr)
 {
 }
 
@@ -21,6 +29,8 @@ void Application::Init() {
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return;
 	}
+
+	glfwSetCursorPosCallback(m_context->GetWindow(), mouse_callback);
 }
 
 void Application::Run() {
@@ -29,7 +39,6 @@ void Application::Run() {
 
 	m_timer.Start();
 	while (!glfwWindowShouldClose(m_context->GetWindow())) {
-
 		scene->Update(m_timer.GetDeltaTime());
 
 		m_context->SwapBuffers();
