@@ -204,7 +204,7 @@ void RenderSystem::Update(double dt) {
 		front.y = sin(Math::DegreeToRadian(camera.pitch));
 		front.z = -sin(Math::DegreeToRadian(camera.yaw));// * cos(Math::DegreeToRadian(camera.pitch));
 
-		std::cout << front << std::endl;
+		//std::cout << front << std::endl;
 		camera.target = front;
 	}
 
@@ -217,22 +217,18 @@ void RenderSystem::Update(double dt) {
 
 	Mtx44 view;
 	view.SetToIdentity();
-//	view.SetToLookAt(camera.position.x, camera.position.y, camera.position.z, 
-//		camera.position.x + camera.target.x, camera.position.y + camera.target.y, camera.position.z - camera.target.z,
-//		camera.up.x, camera.up.y, camera.up.z);
 	view.SetToLookAt(camera.position.x, camera.position.y, camera.position.z,
 		camera.position.x + camera.target.x, camera.position.y + camera.target.y, camera.position.z + camera.target.z,
 		camera.up.x, camera.up.y, camera.up.z);
-	//shader.SetMat4("model", model);
 	shader.SetMat4("view", view);
 
 	glBindVertexArray(VAO);
 
 	for (unsigned int i = 0; i < 10; i++) {
 		Mtx44 modelTrans, modelRot, model;
-		modelTrans.SetToIdentity();
-		modelRot.SetToIdentity();
-		model.SetToIdentity();
+		//modelTrans.SetToIdentity();
+		//modelRot.SetToIdentity();
+		//model.SetToIdentity();
 		modelTrans.SetToTranslation(cubePositions[i].x, cubePositions[i].y, cubePositions[i].z);
 		//modelTrans.SetToTranslation(-1.5f, -2.2f, -15.5f);
 		float angle = 20.0f * i;
@@ -260,8 +256,6 @@ void RenderSystem::Update(double dt) {
 void RenderSystem::RenderMesh(Mesh* mesh) {
 	Mtx44 model, view, projection;
 
-	model.SetToIdentity();
-	view.SetToIdentity();
 	view.SetToTranslation(0, 0, -3);
 	projection.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
 
