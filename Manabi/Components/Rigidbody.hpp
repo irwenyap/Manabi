@@ -3,6 +3,9 @@
 #include "Vector3.h";
 
 struct Rigidbody {
+	bool useGravity;
+
+	Vector3 position;
 	Vector3 velocity;
-	Vector3 acceleration;
+	float mass;
 };

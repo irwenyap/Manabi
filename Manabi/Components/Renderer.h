@@ -1,11 +1,11 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include "../Source/Mesh.h"
+#include "../Source/Model.h"
 
 struct Renderer {
-	Mesh* mesh;
-	std::string file_path;
+	Model *model;
+	//const char* file_path;
 };
 
 #endif // !RENDERER_H

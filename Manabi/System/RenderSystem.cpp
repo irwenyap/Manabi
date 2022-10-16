@@ -8,7 +8,6 @@
 #include "../Components/Renderer.h"
 #include "../Components/Transform.hpp"
 
-#include "../Source/LoadOBJ.h"
 #include "MyMath.h"
 
 //Testing
@@ -16,67 +15,11 @@
 
 extern Coordinator g_coordinator;
 
-float vertices[] = {
-	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,	
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-};
-
-Vector3 cubePositions[] = {
-	Vector3(0.0f,  0.0f,  0.0f),
-	Vector3(2.0f,  5.0f, -15.0f),
-	Vector3(-1.5f, -2.2f, -2.5f),
-	Vector3(-3.8f, -2.0f, -12.3f),
-	Vector3(2.4f, -0.4f, -3.5f),
-	Vector3(-1.7f,  3.0f, -7.5f),
-	Vector3(1.3f, -2.0f, -2.5f),
-	Vector3(1.5f,  2.0f, -2.5f),
-	Vector3(1.5f,  0.2f, -1.5f),
-	Vector3(-1.3f,  1.0f, -1.5f)
-};
-
 void RenderSystem::Initialize() {
-	shader.Initialize("Shader/default.vert", "Shader/default.frag");
+	shader = new Shader();
 
-	//glGenVertexArrays(1, &m_vertexArrayObject);
+	shader->Initialize("Shader/default.vert", "Shader/default.frag");
+
 
 	m_camera = g_coordinator.CreateEntity();
 
@@ -88,77 +31,10 @@ void RenderSystem::Initialize() {
 	camera.SetVars();
 
 	for (auto const& entity : m_entities) {
-		//auto renderer = g_coordinator.GetComponent<Renderer>(entity);
-		//
-		//std::vector<Position> vertices;
-		//std::vector<TexCoord> uvs;
-		//std::vector<Vector3> normals;
-		//bool success = LoadOBJ(renderer.file_path.c_str(), vertices, uvs, normals);
-		//if (!success) {
-		//	std::cout << "OBJ Load Failed" << std::endl;
-		//	return;
-		//}
-
-		//std::vector<Vertex> vertex_buffer_data;
-		//std::vector<GLuint> element_buffer_data;
-
-		//IndexVBO(vertices, uvs, normals, element_buffer_data, vertex_buffer_data);
-
-		//Mesh* mesh = new Mesh();
-		//mesh->m_mode = Mesh::DRAW_TRIANGLES;
-
-		//glBindBuffer(GL_ARRAY_BUFFER, mesh->m_vertexBufferObject);
-		//glBufferData(GL_ARRAY_BUFFER, vertex_buffer_data.size() * sizeof(Vertex), &vertex_buffer_data[0], GL_STATIC_DRAW);
-		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->m_elementBufferObject);
-		//glBufferData(GL_ELEMENT_ARRAY_BUFFER, element_buffer_data.size() * sizeof(GLuint), &element_buffer_data[0], GL_STATIC_DRAW);
-
-		//mesh->m_elementSize = element_buffer_data.size();
-		//renderer.mesh = mesh;
 	}
 
-	//unsigned int VBO, VAO;
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-
-	glBindVertexArray(VAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	// color attribute
-	//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	//glEnableVertexAttribArray(1);
-	// texture coord attribute
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	int width, height, nrChannels;
-	unsigned char* data = stbi_load("./Textures/container.jpg", &width, &height, &nrChannels, 0);
-
-	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	} else {
-		std::cout << "Failed to load texture" << std::endl;
-	}
-
-	stbi_image_free(data);
-
-	shader.Use();
-
-	shader.SetMat4("projection", camera.projection_matrix);
+	shader->Use();
+	shader->SetMat4("projection", camera.projection_matrix);
 }
 
 void RenderSystem::Update(double dt) {
@@ -182,7 +58,7 @@ void RenderSystem::Update(double dt) {
 		float yPos = static_cast<float>(Application::mouse_current_y);
 
 		float xOffSet = xPos - camera.lastX;
-		float yOffSet = yPos - camera.lastY;
+		float yOffSet = camera.lastY - yPos;
 		camera.lastX = xPos;
 		camera.lastY = yPos;
 
@@ -202,66 +78,37 @@ void RenderSystem::Update(double dt) {
 		Vector3 front;
 		front.x = cos(Math::DegreeToRadian(camera.yaw));// cos(Math::DegreeToRadian(camera.pitch));
 		front.y = sin(Math::DegreeToRadian(camera.pitch));
-		front.z = -sin(Math::DegreeToRadian(camera.yaw));// * cos(Math::DegreeToRadian(camera.pitch));
+		front.z = sin(Math::DegreeToRadian(camera.yaw));// * cos(Math::DegreeToRadian(camera.pitch));
 
-		//std::cout << front << std::endl;
-		camera.target = front;
+		camera.target = front.Normalize();
+	}
+
+	{
+		camera.direction = (camera.target - camera.position).Normalize();
+		camera.right = Vector3(0, 1, 0).Cross(camera.direction).Normalize();
+		camera.up = camera.direction.Cross(camera.right).Normalize();
 	}
 
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glBindTexture(GL_TEXTURE_2D, texture);
-
-	//shader.Use();
 
 	Mtx44 view;
 	view.SetToIdentity();
 	view.SetToLookAt(camera.position.x, camera.position.y, camera.position.z,
 		camera.position.x + camera.target.x, camera.position.y + camera.target.y, camera.position.z + camera.target.z,
 		camera.up.x, camera.up.y, camera.up.z);
-	shader.SetMat4("view", view);
+	shader->SetMat4("view", view);
 
-	glBindVertexArray(VAO);
-
-	for (unsigned int i = 0; i < 10; i++) {
+	for (auto const entity : m_entities) {
 		Mtx44 modelTrans, modelRot, model;
-		//modelTrans.SetToIdentity();
-		//modelRot.SetToIdentity();
-		//model.SetToIdentity();
-		modelTrans.SetToTranslation(cubePositions[i].x, cubePositions[i].y, cubePositions[i].z);
-		//modelTrans.SetToTranslation(-1.5f, -2.2f, -15.5f);
-		float angle = 20.0f * i;
-		modelRot.SetToRotation(angle, 1.0f, 0.3f, 0.5f);
-		model = modelTrans * modelRot;
-		shader.SetMat4("model", model);
-
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		modelTrans.SetToTranslation(0, 0, 0);
+		//modelRot.SetToRotation(50.0f, 1.0f, 0.3f, 0.5f);
+		model = modelTrans;
+		shader->SetMat4("model", model);
+		g_coordinator.GetComponent<Renderer>(entity).model->Render(*shader);
 	}
-
-	//for (auto const entity : m_entities) {
-
-		//Mesh *mesh = g_coordinator.GetComponent<Renderer>(entity).mesh;
-		//RenderMesh(mesh);
-
-		//glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		//glClear(GL_COLOR_BUFFER_BIT);
-
-		//glBindTexture(GL_TEXTURE_2D, texture);
-		//glBindVertexArray(m_vertexArrayObject);
-		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	//}
 }
 
-void RenderSystem::RenderMesh(Mesh* mesh) {
-	Mtx44 model, view, projection;
-
-	view.SetToTranslation(0, 0, -3);
-	projection.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
-
-	//shader.SetMat4("projection", projection);
-	//shader.SetMat4("view", view);
-	//shader.SetMat4("model", model);
-
-	mesh->Render();
+void RenderSystem::Exit() {
+	shader->Delete();
 }

@@ -7,6 +7,7 @@
 #include "Coordinator.h"
 
 #include "../System/RenderSystem.h"
+#include "../System/PhysicsSystem.h"
 
 
 class TestScene : public Scene {
@@ -20,8 +21,8 @@ public:
 
 private:
 	//MS modelStack, viewStack, projectionStack;
-
 	std::shared_ptr<RenderSystem> renderSystem;
+	std::shared_ptr<PhysicsSystem> physicsSystem;
 
 	Coordinator m_coordinator;
 };

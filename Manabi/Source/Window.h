@@ -1,7 +1,7 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <glfw3.h>
+#include <glfw/glfw3.h>
 
 #include <iostream>
 

@@ -8,7 +8,7 @@ void PhysicsSystem::Initialize() {
 }
 
 void PhysicsSystem::Update(double dt) {
-	for (auto const& entity : m_entities) {
-		
-	}
+	//for (auto const& entity : m_entities) {
+	//	
+	//}
 }

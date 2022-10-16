@@ -2,10 +2,10 @@
 #define MESH_H
 
 #include <vector>
-#include "Vertex.h"
-#include "Texture.h"
 
 #include "Shader.h"
+#include "Vertex.h"
+#include "Texture.h"
 
 class Mesh {
 public:
