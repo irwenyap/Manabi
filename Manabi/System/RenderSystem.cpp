@@ -44,13 +44,13 @@ void RenderSystem::Update(double dt) {
 		camera.position += 2.0f * camera.target * dt;
 	}
 	if (Application::IsKeyPressed('A')) {
-		camera.position -= 2.0f * (camera.target.Cross(camera.up)).Normalize() * dt;
+		camera.position += 2.0f * camera.right * dt;
 	}	
 	if (Application::IsKeyPressed('S')) {
 		camera.position -= 2.0f * camera.target * dt;
 	}	
 	if (Application::IsKeyPressed('D')) {
-		camera.position += 2.0f * (camera.target.Cross(camera.up)).Normalize() * dt;
+		camera.position -= 2.0f * camera.right * dt;
 	}
 
 	{
@@ -76,17 +76,14 @@ void RenderSystem::Update(double dt) {
 			camera.pitch = -89.0f;
 
 		Vector3 front;
-		front.x = cos(Math::DegreeToRadian(camera.yaw));// cos(Math::DegreeToRadian(camera.pitch));
+		front.x = cos(Math::DegreeToRadian(camera.yaw)) * cos(Math::DegreeToRadian(camera.pitch));
 		front.y = sin(Math::DegreeToRadian(camera.pitch));
-		front.z = sin(Math::DegreeToRadian(camera.yaw));// * cos(Math::DegreeToRadian(camera.pitch));
+		front.z = sin(Math::DegreeToRadian(camera.yaw)) * cos(Math::DegreeToRadian(camera.pitch));
 
 		camera.target = front.Normalize();
-	}
 
-	{
-		camera.direction = (camera.target - camera.position).Normalize();
-		camera.right = Vector3(0, 1, 0).Cross(camera.direction).Normalize();
-		camera.up = camera.direction.Cross(camera.right).Normalize();
+		camera.right = Vector3(0, 1, 0).Cross(camera.target).Normalize();
+		camera.up = camera.target.Cross(camera.right).Normalize();
 	}
 
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -103,8 +100,7 @@ void RenderSystem::Update(double dt) {
 		Mtx44 modelTrans, modelRot, model;
 		Transform transform = g_coordinator.GetComponent<Transform>(entity);
 
-		//modelTrans.SetToTranslation(transform.position.x, transform.position.y, transform.position.z);
-		modelTrans.SetToTranslation(0, 0, 0);
+		modelTrans.SetToTranslation(transform.position.x, transform.position.y, transform.position.z);
 		model = modelTrans;
 		shader->SetMat4("model", model);
 		g_coordinator.GetComponent<Renderer>(entity).model->Render(*shader);

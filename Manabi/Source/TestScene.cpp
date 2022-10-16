@@ -30,7 +30,7 @@ void TestScene::Initialize() {
 	renderSystem = g_coordinator.RegisterSystem<RenderSystem>();
 	{
 		Signature signature;
-		//signature.set(g_coordinator.GetComponentType<Transform>());
+		signature.set(g_coordinator.GetComponentType<Transform>());
 		signature.set(g_coordinator.GetComponentType<Renderer>());
 		g_coordinator.SetSystemSignature<RenderSystem>(signature);
 	}
@@ -40,25 +40,18 @@ void TestScene::Initialize() {
 	physicsSystem = g_coordinator.RegisterSystem<PhysicsSystem>();
 	{
 		Signature signature;
-		//signature.set(g_coordinator.GetComponentType<Transform>());
+		signature.set(g_coordinator.GetComponentType<Transform>());
 		signature.set(g_coordinator.GetComponentType<Rigidbody>());
 		g_coordinator.SetSystemSignature<PhysicsSystem>(signature);
 	}
 
 	physicsSystem->Initialize();
 
-	//std::vector<Entity> entities(1);
-
-	//for (auto& entity : entities) {
-	//	entity = g_coordinator.CreateEntity();
-	//	g_coordinator.AddComponent(entity, Renderer{ .model = new Model("./Models/Cube/cube.obj")});
-	//}
-
 	Entity box = g_coordinator.CreateEntity();
 
-	g_coordinator.AddComponent(box, Transform{ .position = Vector3(0, 0, 0) });
+	g_coordinator.AddComponent(box, Transform{ .position = Vector3(0, 10, 0) });
 	g_coordinator.AddComponent(box, Renderer{ .model = new Model("./Models/Cube/cube.obj") });
-	g_coordinator.AddComponent(box, Rigidbody{ .position = Vector3(0, 0, 0), .mass = 10.0f});
+	g_coordinator.AddComponent(box, Rigidbody{ .useGravity = true, .position = Vector3(0, 10, 0), .mass = 10.0f});
 }
 
 void TestScene::Update(double dt) {
