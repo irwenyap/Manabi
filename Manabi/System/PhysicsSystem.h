@@ -7,6 +7,7 @@ class PhysicsSystem : public System {
 public:
 	void Initialize();
 	void Update(double dt);
+	void Exit();
 
 	const float m_kGRAVITY = -9.8f;
 };

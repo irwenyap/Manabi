@@ -27,7 +27,7 @@ void RenderSystem::Initialize() {
 	g_coordinator.AddComponent(m_camera, Camera{ .position = Vector3(0, 0, 10), .rotation = Vector3(0, 1, 0), .target = Vector3(0, 0, -1) });
 
 	camera = g_coordinator.GetComponent<Camera>(m_camera);
-	camera.projection_matrix.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 1000.0f);
+	camera.projection_matrix.SetToPerspective(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
 	camera.SetVars();
 
 	for (auto const& entity : m_entities) {
@@ -101,8 +101,10 @@ void RenderSystem::Update(double dt) {
 
 	for (auto const entity : m_entities) {
 		Mtx44 modelTrans, modelRot, model;
+		Transform transform = g_coordinator.GetComponent<Transform>(entity);
+
+		//modelTrans.SetToTranslation(transform.position.x, transform.position.y, transform.position.z);
 		modelTrans.SetToTranslation(0, 0, 0);
-		//modelRot.SetToRotation(50.0f, 1.0f, 0.3f, 0.5f);
 		model = modelTrans;
 		shader->SetMat4("model", model);
 		g_coordinator.GetComponent<Renderer>(entity).model->Render(*shader);

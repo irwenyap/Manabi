@@ -31,8 +31,17 @@ void EntityManager::DestroyEntity(Entity entity) {
 }
 
 Signature EntityManager::GetSignature(Entity entity) {
-	return Signature();
+	assert(entity < MAX_ENTITIES && "Entity out of range.");
+
+	// Get this entity's signature from the array
+	return m_signatures[entity];
+
 }
 
 void EntityManager::SetSignature(Entity entity, Signature signature) {
+	assert(entity < MAX_ENTITIES && "Entity out of range.");
+
+	// Put this entity's signature into the array
+	m_signatures[entity] = signature;
+
 }
