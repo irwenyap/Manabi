@@ -7,7 +7,13 @@
 #include "../Source/Shader.h"
 #include "../Components/Camera.h"
 
+
 class RenderSystem : public System {
+	enum SHADER_TYPE {
+		DEFAULT_SHADER,
+		LIGHT_SHADER,
+		NONE
+	};
 public:
 	void Initialize();
 	void Update(double dt);
@@ -16,7 +22,8 @@ public:
 	Entity m_camera;
 	//Test
 	Camera camera;
-	Shader* shader;
+
+	std::vector<Shader*> m_shaders;
 };
 
 

@@ -7,6 +7,7 @@
 #include "../Components/Camera.h"
 #include "../Components/Transform.hpp"
 #include "../Components/Rigidbody.hpp"
+#include "../Components/Collider.hpp";
 
 #include <iostream>
 
@@ -19,13 +20,13 @@ TestScene::~TestScene() {
 }
 
 void TestScene::Initialize() {
-
 	g_coordinator.Initialize();
 
 	g_coordinator.RegisterComponent<Transform>();
 	g_coordinator.RegisterComponent<Renderer>();
 	g_coordinator.RegisterComponent<Camera>();
 	g_coordinator.RegisterComponent<Rigidbody>();
+	g_coordinator.RegisterComponent<Collider>();
 
 	renderSystem = g_coordinator.RegisterSystem<RenderSystem>();
 	{
@@ -35,28 +36,44 @@ void TestScene::Initialize() {
 		g_coordinator.SetSystemSignature<RenderSystem>(signature);
 	}
 
-	renderSystem->Initialize();
 
 	physicsSystem = g_coordinator.RegisterSystem<PhysicsSystem>();
 	{
 		Signature signature;
 		signature.set(g_coordinator.GetComponentType<Transform>());
 		signature.set(g_coordinator.GetComponentType<Rigidbody>());
+		signature.set(g_coordinator.GetComponentType<Collider>());
 		g_coordinator.SetSystemSignature<PhysicsSystem>(signature);
 	}
 
-	physicsSystem->Initialize();
+
 
 	Entity box = g_coordinator.CreateEntity();
 
-	g_coordinator.AddComponent(box, Transform{ .position = Vector3(0, 10, 0) });
-	g_coordinator.AddComponent(box, Renderer{ .model = new Model("./Models/Cube/cube.obj") });
-	g_coordinator.AddComponent(box, Rigidbody{ .useGravity = true, .position = Vector3(0, 10, 0), .mass = 10.0f});
+	g_coordinator.AddComponent(box, Transform{ .position = Vector3(0, 10, 0), .scale = Vector3(1, 1, 1)});
+	g_coordinator.AddComponent(box, Renderer{ .model = new Model("./Models/Cube/cube.obj"), .material = new Material(0)});
+	g_coordinator.AddComponent(box, Rigidbody{ 
+		.useGravity = true, .detectCollisions = true, 
+		.position = Vector3(0, 10, 0), .mass = 10.0f });
+	g_coordinator.AddComponent(box, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 1, 1)});
+
+	Entity floor = g_coordinator.CreateEntity();
+
+	g_coordinator.AddComponent(floor, Transform{ .position = Vector3(0, 0, 0), .scale = Vector3(1, 1, 1) });
+	g_coordinator.AddComponent(floor, Renderer{ .model = new Model("./Models/Cube/cube.obj"), .material = new Material(0)});
+	g_coordinator.AddComponent(floor, Rigidbody{ 
+		.useGravity = false, .detectCollisions = true,
+		.isKinematic = true, .position = Vector3(0, 0, 0),
+		.mass = 10.0f });
+	g_coordinator.AddComponent(floor, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 1, 1) });
+
+	renderSystem->Initialize();
+	physicsSystem->Initialize();
 }
 
 void TestScene::Update(double dt) {
-	renderSystem->Update(dt);
 	physicsSystem->Update(dt);
+	renderSystem->Update(dt);
 }
 
 void TestScene::Exit() {

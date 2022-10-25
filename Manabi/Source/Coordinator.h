@@ -64,6 +64,16 @@ public:
 		return m_componentManager->GetComponent<T>(entity);
 	}
 
+	//template<typename T>
+	//T& TryGetComponent(Entity entity) {
+	//	try {
+	//		return m_componentManager->GetComponent<T>(entity);
+	//	}
+	//	catch () {
+	//		return;
+	//	}
+	//}
+
 	template<typename T>
 	ComponentType GetComponentType() {
 		return m_componentManager->GetComponentType<T>();

@@ -2,10 +2,11 @@
 #define RENDERER_H
 
 #include "../Source/Model.h"
+#include "../Source/Material.h"
 
 struct Renderer {
 	Model *model;
-	//const char* file_path;
+	Material *material;
 };
 
 #endif // !RENDERER_H

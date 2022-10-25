@@ -2,6 +2,8 @@
 #define PHYSICS_SYSTEM_H
 
 #include "../Source/System.h"
+#include "../Components/Rigidbody.hpp";
+#include "../Components/Collider.hpp";
 
 class PhysicsSystem : public System {
 public:
@@ -9,7 +11,12 @@ public:
 	void Update(double dt);
 	void Exit();
 
-	const float m_kGRAVITY = -9.8f;
+	const float m_kGRAVITY = -1.8f;
+
+private:
+	bool CheckCollision(Collider& c1, Collider& c2);
+	bool GetSeparatingPlane(Vector3& vDist, Vector3 plane, Collider otherBox);
+	void CollisionResponse(Rigidbody& r1, Rigidbody& r2, float dt);
 };
 
 #endif // !PHYSICS_SYSTEM_H

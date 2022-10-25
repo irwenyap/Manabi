@@ -147,12 +147,14 @@
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Components\BoxCollider.hpp" />
     <ClInclude Include="Components\Camera.h" />
     <ClInclude Include="Components\Collider.hpp" />
+    <ClInclude Include="Components\Light.hpp" />
     <ClInclude Include="Components\Renderer.h" />
     <ClInclude Include="Components\Rigidbody.hpp" />
     <ClInclude Include="Components\Transform.hpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Model.h" />
     <ClInclude Include="Source\Texture.h" />
@@ -175,6 +177,9 @@
     <ClInclude Include="Source\SystemManager.h" />
     <ClInclude Include="Source\TestScene.h" />
     <ClInclude Include="Source\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Manabi.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
