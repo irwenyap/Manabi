@@ -33,8 +33,8 @@ void RenderSystem::Initialize() {
 	camera.projection_matrix.SetToPerspective(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
 
 	auto light = g_coordinator.CreateEntity();
-	g_coordinator.AddComponent(light, Transform{ .position = Vector3(10, 10, 10), .scale = Vector3(0.2, 0.2, 0.2) });
-	g_coordinator.AddComponent(light, Renderer{ .model = new Model("./Models/Cube/cube.obj"), .material = new Material(1) });
+	g_coordinator.AddComponent(light, Transform{ .position = Vector3(4, 4, 4), .scale = Vector3(0.2, 0.2, 0.2) });
+	g_coordinator.AddComponent(light, Renderer{ .model = new Model("./Models/Sphere/sphere.obj"), .material = new Material(1) });
 }
 
 void RenderSystem::Update(double dt) {
@@ -111,11 +111,14 @@ void RenderSystem::Update(double dt) {
 		model = modelTrans * modelRot * modelScale;
 		m_shaders[shaderIndex]->SetMat4("model", model);
 		g_coordinator.GetComponent<Renderer>(entity).model->Render(*m_shaders[shaderIndex]);
-		if (shaderIndex == RenderSystem::LIGHT_SHADER) {
-			m_shaders[shaderIndex]->SetVec3("objectColor", 1.0f, 0.5f, 0.31f);
+		if (shaderIndex == RenderSystem::DEFAULT_SHADER) {
+			Vector3 lightpos = Vector3(4, 4, 4);
+			m_shaders[shaderIndex]->SetVec3("lightPos", lightpos);
+			m_shaders[shaderIndex]->SetVec3("viewPos", camera.position);
 			m_shaders[shaderIndex]->SetVec3("lightColor", 1.0f, 1.0f, 1.0f);
+			m_shaders[shaderIndex]->SetVec3("objectColor", 1.0f, 0.5f, 0.31f);
 		}
-	}
+	}	
 }
 
 void RenderSystem::Exit() {

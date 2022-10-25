@@ -20,7 +20,6 @@ public:
 	void Exit();
 
 	Entity m_camera;
-	//Test
 	Camera camera;
 
 	std::vector<Shader*> m_shaders;
