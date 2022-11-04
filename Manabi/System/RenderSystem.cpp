@@ -34,7 +34,7 @@ void RenderSystem::Initialize() {
 
 	auto light = g_coordinator.CreateEntity();
 	g_coordinator.AddComponent(light, Transform{ .position = Vector3(4, 4, 4), .scale = Vector3(0.2, 0.2, 0.2) });
-	g_coordinator.AddComponent(light, Renderer{ .model = new Model("./Models/Sphere/sphere.obj"), .material = new Material(1) });
+	g_coordinator.AddComponent(light, Renderer{ .model = new Model("./Models/Sphere/sphere.obj"), .material = new Material(1, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
 }
 
 void RenderSystem::Update(double dt) {
@@ -98,7 +98,8 @@ void RenderSystem::Update(double dt) {
 	for (auto const entity : m_entities) {
 		Mtx44 modelTrans, modelRot, modelScale, model;
 		Transform transform = g_coordinator.GetComponent<Transform>(entity);
-		int shaderIndex = g_coordinator.GetComponent<Renderer>(entity).material->shaderIndex;
+		Material *material = g_coordinator.GetComponent<Renderer>(entity).material;
+		int shaderIndex = material->m_shaderIndex;
 
 		m_shaders[shaderIndex]->Use();
 
@@ -113,10 +114,17 @@ void RenderSystem::Update(double dt) {
 		g_coordinator.GetComponent<Renderer>(entity).model->Render(*m_shaders[shaderIndex]);
 		if (shaderIndex == RenderSystem::DEFAULT_SHADER) {
 			Vector3 lightpos = Vector3(4, 4, 4);
-			m_shaders[shaderIndex]->SetVec3("lightPos", lightpos);
 			m_shaders[shaderIndex]->SetVec3("viewPos", camera.position);
-			m_shaders[shaderIndex]->SetVec3("lightColor", 1.0f, 1.0f, 1.0f);
-			m_shaders[shaderIndex]->SetVec3("objectColor", 1.0f, 0.5f, 0.31f);
+
+			m_shaders[shaderIndex]->SetVec3("material.ambient", material->m_ambient);
+			m_shaders[shaderIndex]->SetVec3("material.diffuse", material->m_diffuse);
+			m_shaders[shaderIndex]->SetVec3("material.specular", material->m_specular);
+			m_shaders[shaderIndex]->SetFloat("material.shininess", material->m_shininess);
+
+			m_shaders[shaderIndex]->SetVec3("light.position", lightpos);
+			m_shaders[shaderIndex]->SetVec3("light.ambient", 0.2f, 0.2f, 0.2f);
+			m_shaders[shaderIndex]->SetVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
+			m_shaders[shaderIndex]->SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
 		}
 	}	
 }
