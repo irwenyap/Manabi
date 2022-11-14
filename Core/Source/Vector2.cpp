@@ -1,16 +1,23 @@
 #include "Vector2.h"
 
-Vector2::Vector2( float a, float b )
+Vector2::Vector2(float a, float b) : x(a), y(b)
 {
 }
 
-Vector2::Vector2( const Vector2 &rhs )
+Vector2::Vector2(const Vector2 &rhs) : x(rhs.x), y(rhs.y)
 {
 }
 
 void Vector2::Set( float a, float b )
 {
+	x = a;
+	y = b;
 }
+//
+//void Vector2::Set(Vector2& other) {
+//	x = other.x;
+//	y = other.y;
+//}
 
 Vector2 Vector2::operator+( const Vector2& rhs ) const
 {

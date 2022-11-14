@@ -134,6 +134,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scenes\SceneLevelTwo.cpp" />
+    <ClCompile Include="Scenes\SceneLevelOne.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="System\PhysicsSystem.cpp" />
@@ -154,9 +156,12 @@
     <ClInclude Include="Components\Rigidbody.hpp" />
     <ClInclude Include="Components\Transform.hpp" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scenes\SceneLevelTwo.h" />
+    <ClInclude Include="Scenes\SceneLevelOne.h" />
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Model.h" />
+    <ClInclude Include="Source\ModelBuilder.hpp" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Vertex.h" />
     <ClInclude Include="System\PhysicsSystem.h" />

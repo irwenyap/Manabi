@@ -15,8 +15,8 @@ public:
 
 private:
 	bool CheckCollision(Collider& c1, Collider& c2);
-	bool GetSeparatingPlane(Vector3& vDist, Vector3 plane, Collider otherBox);
-	void CollisionResponse(Rigidbody& r1, Rigidbody& r2, float dt);
+	bool GetSeparatingPlane(Vector3& vDist, Vector3 plane, Collider c1, Collider c2);
+	void CollisionResponse(Rigidbody& r1, Collider& c1, Rigidbody& r2, Collider& c2, float dt);
 };
 
 #endif // !PHYSICS_SYSTEM_H

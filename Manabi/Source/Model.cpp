@@ -10,7 +10,7 @@ void Model::Render(Shader& shader) {
 
 void Model::LoadModel(std::string path) {
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
 		std::cout << "ERROR::ASIMP::" << importer.GetErrorString() << std::endl;
@@ -108,14 +108,25 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene) {
 
 std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName) {
 	std::vector<Texture> textures;
-	for (unsigned int i = 0; i < mat->GetTextureCount(type); ++i) {
+	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++) {
 		aiString str;
 		mat->GetTexture(type, i, &str);
-		Texture texture;
-		texture.id = TextureFromFile(str.C_Str(), m_directory);
-		texture.type = typeName;
-		texture.path = str.C_Str();
-		textures.push_back(texture);
+		bool skip = false;
+		for (unsigned int j = 0; j < m_texturesLoaded.size(); j++) {
+			if (std::strcmp(m_texturesLoaded[j].path.data(), str.C_Str()) == 0) {
+				textures.push_back(m_texturesLoaded[j]);
+				skip = true;
+				break;
+			}
+		}
+		if (!skip) {   // if texture hasn't been loaded already, load it
+			Texture texture;
+			texture.id = TextureFromFile(str.C_Str(), m_directory);
+			texture.type = typeName;
+			texture.path = str.C_Str();
+			textures.push_back(texture);
+			m_texturesLoaded.push_back(texture); // add to loaded textures
+		}
 	}
 	return textures;
 }

@@ -116,8 +116,7 @@ void RenderSystem::Update(double dt) {
 			Vector3 lightpos = Vector3(4, 4, 4);
 			m_shaders[shaderIndex]->SetVec3("viewPos", camera.position);
 
-			m_shaders[shaderIndex]->SetVec3("material.ambient", material->m_ambient);
-			m_shaders[shaderIndex]->SetVec3("material.diffuse", material->m_diffuse);
+			m_shaders[shaderIndex]->SetInt("material.diffuse", 0);
 			m_shaders[shaderIndex]->SetVec3("material.specular", material->m_specular);
 			m_shaders[shaderIndex]->SetFloat("material.shininess", material->m_shininess);
 

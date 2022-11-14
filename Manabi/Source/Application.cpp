@@ -39,17 +39,12 @@ void Application::Run() {
 
 	m_timer.Start();
 	while (!glfwWindowShouldClose(m_context->GetWindow())) {
+		m_timer.Update();
 		scene->Update(m_timer.GetDeltaTime());
 
 		m_context->SwapBuffers();
 		glfwPollEvents();
-
-		m_timer.Update();
 	}
-	//glDeleteVertexArrays(1, &VAO);
-	//glDeleteBuffers(1, &VBO);
-	//glDeleteBuffers(1, &EBO);
-	//shader.Delete();
 }
 
 void Application::Exit() {

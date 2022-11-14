@@ -1,19 +1,18 @@
 #pragma once
 
-#include "Scene.h"
+#include "../Source/Scene.h"
 #include "Mtx44.h"
 #include "MatrixStack.h"
 
-#include "Coordinator.h"
+#include "../Source/Coordinator.h"
 
 #include "../System/RenderSystem.h"
 #include "../System/PhysicsSystem.h"
 
-
-class TestScene : public Scene {
+class SceneLevelTwo : public Scene {
 public:
-	TestScene();
-	~TestScene();
+	SceneLevelTwo();
+	~SceneLevelTwo();
 
 	virtual void Initialize();
 	virtual void Update(double dt);

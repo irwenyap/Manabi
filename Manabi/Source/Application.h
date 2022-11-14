@@ -19,10 +19,6 @@ public:
 	void Exit();
 
 	static bool IsKeyPressed(unsigned short key);
-	static float GetMousePosX();
-	static float GetMousePosY();
-	static bool GetMouseUpdate();
-	static void GetCursorPos(double* xpos, double* ypos);
 
 	static double mouse_current_x, mouse_current_y;
 private:

@@ -22,6 +22,7 @@ public:
 	Entity m_camera;
 	Camera camera;
 
+
 	std::vector<Shader*> m_shaders;
 };
 

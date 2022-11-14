@@ -71,6 +71,12 @@ void Vector3::Set( float a, float b, float c )
 	z = c;
 }
 
+void Vector3::Set(Vector3 &other) {
+	x = other.x;
+	y = other.y;
+	z = other.z;
+}
+
 /******************************************************************************/
 /*!
 \brief	Set all elements to zero

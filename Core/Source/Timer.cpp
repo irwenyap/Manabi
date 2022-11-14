@@ -11,11 +11,10 @@ namespace Core {
 
 	void Timer::Start() {
 		QueryPerformanceCounter(&prevTime);
-		prevTime = startTime;
+		//prevTime = startTime;
 	}
 
-	void Timer::Update()
-	{
+	void Timer::Update() {
 		LARGE_INTEGER delta, elapsed;
 		QueryPerformanceCounter(&currTime);
 
