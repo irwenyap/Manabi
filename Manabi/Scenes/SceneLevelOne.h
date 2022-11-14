@@ -22,6 +22,6 @@ private:
 	std::shared_ptr<RenderSystem> renderSystem;
 	std::shared_ptr<PhysicsSystem> physicsSystem;
 
-	Coordinator m_coordinator;
+	//Coordinator m_coordinator;
 };
 

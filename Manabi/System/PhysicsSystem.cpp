@@ -14,7 +14,7 @@ void PhysicsSystem::Initialize() {
 }
 
 void PhysicsSystem::Update(double dt) {
-	int x = 0;
+	int x = 1;
 	for (std::set<Entity>::iterator it = m_entities.begin(); it != m_entities.end(); ++it) {
 		Rigidbody& rb1 = g_coordinator.GetComponent<Rigidbody>(*it);
 		if (rb1.useGravity) {
@@ -22,8 +22,8 @@ void PhysicsSystem::Update(double dt) {
 		}
 
 		if (rb1.detectCollisions) {
-			std::set<Entity>::iterator it2 = m_entities.begin();
-			for (int y = 1; y < m_entities.size(); ++y) {
+			std::set<Entity>::iterator it2 = it;
+			for (int y = x; y < m_entities.size(); ++y) {
 				std::advance(it2, 1);
 				Rigidbody& rb2 = g_coordinator.GetComponent<Rigidbody>(*it2);
 				if (rb2.detectCollisions) {
@@ -40,7 +40,7 @@ void PhysicsSystem::Update(double dt) {
 		rb1.position += rb1.velocity * dt;
 		Transform& transform = g_coordinator.GetComponent<Transform>(*it);
 		transform.position = rb1.position;
-
+		
 		++x;
 	}
 }

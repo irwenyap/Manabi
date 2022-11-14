@@ -1,7 +1,7 @@
-#include <glad/glad.h>
+//#include <glad/glad.h>
 
 #include "TestScene.h"
-#include "Shader.h"
+//#include "Shader.h"
 
 #include "../Components/Renderer.h"
 #include "../Components/Camera.h"
@@ -50,50 +50,65 @@ void TestScene::Initialize() {
 
 	// Register Entities
 
-	{
-		Entity box1 = g_coordinator.CreateEntity();
+	//{
+	//	Entity box1 = g_coordinator.CreateEntity();
 
-		g_coordinator.AddComponent(box1, Transform{ .position = Vector3(0, 30, 0), .scale = Vector3(1, 1, 1) });
-		g_coordinator.AddComponent(box1, Renderer{
-			.model = new Model("./Models/Cube/cube.obj"),
-			.material = new Material(0, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
+	//	g_coordinator.AddComponent(box1, Transform{ .position = Vector3(0, 40, 0), .scale = Vector3(1, 1, 1) });
+	//	g_coordinator.AddComponent(box1, Renderer{
+	//		.model = new Model("./Models/Cube/cube.obj"),
+	//		.material = new Material(0, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
 
-		g_coordinator.AddComponent(box1, Rigidbody{
-			.useGravity = true, .detectCollisions = true,
-			.position = Vector3(0, 30, 0), .mass = 10.0f });
+	//	g_coordinator.AddComponent(box1, Rigidbody{
+	//		.useGravity = true, .detectCollisions = true,
+	//		.position = Vector3(0, 40, 0), .mass = 10.0f });
 
-		g_coordinator.AddComponent(box1, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 1, 1) });
-	}
+	//	g_coordinator.AddComponent(box1, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 1, 1) });
+	//}
 
-	{
-		Entity box2 = g_coordinator.CreateEntity();
+	//{
+	//	Entity box1 = g_coordinator.CreateEntity();
 
-		g_coordinator.AddComponent(box2, Transform{ .position = Vector3(0, 20, 0), .scale = Vector3(1, 1, 1) });
-		g_coordinator.AddComponent(box2, Renderer{
-			.model = new Model("./Models/Cube/cube.obj"),
-			.material = new Material(0, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
+	//	g_coordinator.AddComponent(box1, Transform{ .position = Vector3(0, 30, 0), .scale = Vector3(1, 1, 1) });
+	//	g_coordinator.AddComponent(box1, Renderer{
+	//		.model = new Model("./Models/Cube/cube.obj"),
+	//		.material = new Material(0, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
 
-		g_coordinator.AddComponent(box2, Rigidbody{
-			.useGravity = true, .detectCollisions = true,
-			.position = Vector3(0, 20, 0), .mass = 10.0f });
+	//	g_coordinator.AddComponent(box1, Rigidbody{
+	//		.useGravity = true, .detectCollisions = true,
+	//		.position = Vector3(0, 30, 0), .mass = 10.0f });
 
-		g_coordinator.AddComponent(box2, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 1, 1) });
-	}
+	//	g_coordinator.AddComponent(box1, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 1, 1) });
+	//}
 
-	{
-		Entity box = g_coordinator.CreateEntity();
+	//{
+	//	Entity box2 = g_coordinator.CreateEntity();
 
-		g_coordinator.AddComponent(box, Transform{ .position = Vector3(0, 10, 0), .scale = Vector3(1, 1, 1) });
-		g_coordinator.AddComponent(box, Renderer{
-			.model = new Model("./Models/Cube/cube.obj"),
-			.material = new Material(0, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
+	//	g_coordinator.AddComponent(box2, Transform{ .position = Vector3(0, 20, 0), .scale = Vector3(1, 1, 1) });
+	//	g_coordinator.AddComponent(box2, Renderer{
+	//		.model = new Model("./Models/Cube/cube.obj"),
+	//		.material = new Material(0, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
 
-		g_coordinator.AddComponent(box, Rigidbody{
-			.useGravity = true, .detectCollisions = true,
-			.position = Vector3(0, 10, 0), .mass = 10.0f });
+	//	g_coordinator.AddComponent(box2, Rigidbody{
+	//		.useGravity = true, .detectCollisions = true,
+	//		.position = Vector3(0, 20, 0), .mass = 10.0f });
 
-		g_coordinator.AddComponent(box, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 1, 1) });
-	}
+	//	g_coordinator.AddComponent(box2, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 1, 1) });
+	//}
+
+	//{
+	//	Entity box = g_coordinator.CreateEntity();
+
+	//	g_coordinator.AddComponent(box, Transform{ .position = Vector3(0, 10, 0), .scale = Vector3(1, 1, 1) });
+	//	g_coordinator.AddComponent(box, Renderer{
+	//		.model = new Model("./Models/Cube/cube.obj"),
+	//		.material = new Material(0, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
+
+	//	g_coordinator.AddComponent(box, Rigidbody{
+	//		.useGravity = true, .detectCollisions = true,
+	//		.position = Vector3(0, 10, 0), .mass = 10.0f });
+
+	//	g_coordinator.AddComponent(box, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 1, 1) });
+	//}
 
 	{
 		Entity floor = g_coordinator.CreateEntity();
@@ -105,6 +120,21 @@ void TestScene::Initialize() {
 		g_coordinator.AddComponent(floor, Rigidbody{
 			.useGravity = false, .detectCollisions = true,
 			.isKinematic = true, .position = Vector3(0, 0, 0),
+			.mass = 10.0f });
+
+		g_coordinator.AddComponent(floor, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 1, 1) });
+	}
+
+	{
+		Entity floor = g_coordinator.CreateEntity();
+		g_coordinator.AddComponent(floor, Transform{ .position = Vector3(0, 0, -5), .scale = Vector3(1, 1, 1) });
+		g_coordinator.AddComponent(floor, Renderer{
+			.model = new Model("./Models/Pistol/pistol.obj"),
+			.material = new Material(0, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
+
+		g_coordinator.AddComponent(floor, Rigidbody{
+			.useGravity = false, .detectCollisions = false,
+			.isKinematic = true, .position = Vector3(0, 0, -5),
 			.mass = 10.0f });
 
 		g_coordinator.AddComponent(floor, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 1, 1) });

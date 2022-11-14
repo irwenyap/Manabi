@@ -11,7 +11,7 @@ public:
 	void Update(double dt);
 	void Exit();
 
-	const float m_kGRAVITY = -1.8f;
+	const float m_kGRAVITY = -9.8f;
 
 private:
 	bool CheckCollision(Collider& c1, Collider& c2);

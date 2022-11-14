@@ -1,6 +1,8 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+//Coordinator g_coordinator;
+
 class Scene {
 public:
 	Scene() {}
