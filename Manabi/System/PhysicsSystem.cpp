@@ -49,8 +49,6 @@ void PhysicsSystem::Exit() {
 }
 
 bool PhysicsSystem::CheckCollision(Collider& c1, Collider& c2) {
-	//std::cout << c1.transform->position << " : " << c2.transform->position << std::endl;
-
 	Vector3 vDist = c1.transform->position - c2.transform->position;
 	return !(GetSeparatingPlane(vDist, Vector3(1, 0, 0), c1, c2) ||
 		GetSeparatingPlane(vDist, Vector3(0, 1, 0), c1, c2) ||

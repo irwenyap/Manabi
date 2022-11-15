@@ -134,6 +134,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="System\CameraControlSystem.cpp" />
+    <ClCompile Include="System\PlayerControlSystem.cpp" />
     <ClCompile Include="Scenes\SceneLevelTwo.cpp" />
     <ClCompile Include="Scenes\SceneLevelOne.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
@@ -149,12 +151,14 @@
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Components\Camera.h" />
+    <ClInclude Include="System\CameraControlSystem.h" />
+    <ClInclude Include="Components\Camera.hpp" />
     <ClInclude Include="Components\Collider.hpp" />
     <ClInclude Include="Components\Light.hpp" />
     <ClInclude Include="Components\Renderer.h" />
     <ClInclude Include="Components\Rigidbody.hpp" />
     <ClInclude Include="Components\Transform.hpp" />
+    <ClInclude Include="System\PlayerControlSystem.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scenes\SceneLevelTwo.h" />
     <ClInclude Include="Scenes\SceneLevelOne.h" />

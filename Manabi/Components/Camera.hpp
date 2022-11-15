@@ -1,5 +1,5 @@
-#ifndef CAMERA_H
-#define CAMERA_H
+#ifndef CAMERA_HPP
+#define CAMERA_HPP
 
 #include "Mtx44.h"
 
@@ -17,4 +17,4 @@ struct Camera {
 	float lastX, lastY;
 };
 
-#endif // !CAMERA_H
+#endif // !CAMERA_HPP

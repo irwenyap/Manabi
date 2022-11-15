@@ -5,7 +5,7 @@
 #include "../Source/System.h"
 #include "../Source/Mesh.h"
 #include "../Source/Shader.h"
-#include "../Components/Camera.h"
+#include "../Components/Camera.hpp"
 
 
 class RenderSystem : public System {
@@ -21,7 +21,6 @@ public:
 
 	Entity m_camera;
 	Camera camera;
-
 
 	std::vector<Shader*> m_shaders;
 };

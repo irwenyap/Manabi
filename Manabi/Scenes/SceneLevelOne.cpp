@@ -1,7 +1,7 @@
 #include "SceneLevelOne.h"
 
 #include "../Components/Renderer.h"
-#include "../Components/Camera.h"
+#include "../Components/Camera.hpp"
 #include "../Components/Transform.hpp"
 #include "../Components/Rigidbody.hpp"
 #include "../Components/Collider.hpp";
