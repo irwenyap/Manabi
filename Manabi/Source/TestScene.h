@@ -8,6 +8,7 @@
 
 #include "../System/RenderSystem.h"
 #include "../System/PhysicsSystem.h"
+#include "../System/TransformSystem.h"
 #include "../System/CameraControlSystem.h"
 #include "../System/PlayerControlSystem.h"
 
@@ -23,6 +24,7 @@ public:
 
 private:
 	std::shared_ptr<RenderSystem> renderSystem;
+	std::shared_ptr<TransformSystem> transformSystem;
 	std::shared_ptr<PhysicsSystem> physicsSystem;
 	std::shared_ptr<CameraControlSystem> cameraControlSystem;
 	std::shared_ptr<PlayerControlSystem> playerControlSystemSystem;

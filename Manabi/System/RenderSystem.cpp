@@ -95,9 +95,9 @@ void RenderSystem::Update(double dt) {
 		camera.position.x + camera.target.x, camera.position.y + camera.target.y, camera.position.z + camera.target.z,
 		camera.up.x, camera.up.y, camera.up.z);
 
-	for (auto const entity : m_entities) {
-		Mtx44 modelTrans, modelRot, modelScale, model;
-		Transform transform = g_coordinator.GetComponent<Transform>(entity);
+	for (auto const& entity : m_entities) {
+		//Mtx44 modelTrans, modelRot, modelScale, model;
+		Transform &transform = g_coordinator.GetComponent<Transform>(entity);
 		Material *material = g_coordinator.GetComponent<Renderer>(entity).material;
 		int shaderIndex = material->m_shaderIndex;
 
@@ -106,11 +106,11 @@ void RenderSystem::Update(double dt) {
 		m_shaders[shaderIndex]->SetMat4("projection", camera.projection_matrix);
 		m_shaders[shaderIndex]->SetMat4("view", view);
 
-		modelTrans.SetToTranslation(transform.position.x, transform.position.y, transform.position.z);
-		modelRot.SetToIdentity();
-		modelScale.SetToScale(transform.scale.x, transform.scale.y, transform.scale.z);
-		model = modelTrans * modelRot * modelScale;
-		m_shaders[shaderIndex]->SetMat4("model", model);
+		//modelTrans.SetToTranslation(transform.position.x, transform.position.y, transform.position.z);
+		//modelRot.SetToIdentity();
+		//modelScale.SetToScale(transform.scale.x, transform.scale.y, transform.scale.z);
+		//model = modelTrans * modelRot * modelScale;
+		m_shaders[shaderIndex]->SetMat4("model", transform.localToWorldMatrix);
 		g_coordinator.GetComponent<Renderer>(entity).model->Render(*m_shaders[shaderIndex]);
 		if (shaderIndex == RenderSystem::DEFAULT_SHADER) {
 			Vector3 lightpos = Vector3(4, 4, 4);
@@ -125,7 +125,7 @@ void RenderSystem::Update(double dt) {
 			m_shaders[shaderIndex]->SetVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
 			m_shaders[shaderIndex]->SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
 		}
-	}	
+	}
 }
 
 void RenderSystem::Exit() {

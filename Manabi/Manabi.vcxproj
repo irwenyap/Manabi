@@ -149,6 +149,7 @@
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\TestScene.cpp" />
     <ClCompile Include="Source\Window.cpp" />
+    <ClCompile Include="System\TransformSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System\CameraControlSystem.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="Source\SystemManager.h" />
     <ClInclude Include="Source\TestScene.h" />
     <ClInclude Include="Source\Window.h" />
+    <ClInclude Include="System\TransformSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Manabi.rc" />
