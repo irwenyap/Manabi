@@ -169,7 +169,7 @@ void TestScene::Initialize() {
 		g_coordinator.AddComponent(floor, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(10, 1, 10) });
 
 		Entity box = g_coordinator.CreateEntity();
-		g_coordinator.AddComponent(box, Transform{ .position = Vector3(0, 2, 0), .scale = Vector3(1, 1, 1) });
+		g_coordinator.AddComponent(box, Transform{ .position = Vector3(0, 5, 0), .scale = Vector3(0.1, 0.1, 0.1) });
 		g_coordinator.AddComponent(box, Renderer{
 			.model = new Model("./Models/Cube/cube.obj"),
 			.material = new Material(0, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
@@ -183,8 +183,14 @@ void TestScene::Initialize() {
 
 		auto &transform = g_coordinator.GetComponent<Transform>(floor);
 		auto &transform2 = g_coordinator.GetComponent<Transform>(box);
-		transform2.parent = &transform;
+		//transform2.parent = &transform;
 	}
+
+	auto light = g_coordinator.CreateEntity();
+	g_coordinator.AddComponent(light, Transform{ .position = Vector3(4, 4, 4), .scale = Vector3(1, 1, 1) });
+	g_coordinator.AddComponent(light, Renderer{
+		.model = new Model("./Models/Sphere/sphere.obj"),
+		.material = new Material(1, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
 
 	transformSystem->Initialize();
 	cameraControlSystem->Initialize();

@@ -20,7 +20,7 @@ void RenderSystem::Initialize() {
 	Shader* lightShad = new Shader();
 
 	defaultShad->Initialize("Shader/default.vert", "Shader/default.frag");
-	lightShad->Initialize("Shader/default.vert", "Shader/light.frag");
+	lightShad->Initialize("Shader/light.vert", "Shader/light.frag");
 
 	m_shaders.push_back(defaultShad);
 	m_shaders.push_back(lightShad);
@@ -32,9 +32,7 @@ void RenderSystem::Initialize() {
 	camera = g_coordinator.GetComponent<Camera>(m_camera);
 	camera.projection_matrix.SetToPerspective(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
 
-	auto light = g_coordinator.CreateEntity();
-	g_coordinator.AddComponent(light, Transform{ .position = Vector3(4, 4, 4), .scale = Vector3(0.2, 0.2, 0.2) });
-	g_coordinator.AddComponent(light, Renderer{ .model = new Model("./Models/Sphere/sphere.obj"), .material = new Material(1, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
+
 }
 
 void RenderSystem::Update(double dt) {
