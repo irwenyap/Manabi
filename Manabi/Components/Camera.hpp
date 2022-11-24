@@ -4,6 +4,8 @@
 #include "Mtx44.h"
 
 struct Camera {
+	bool isActive;
+
 	Mtx44 projection_matrix;
 
 	Vector3 position;

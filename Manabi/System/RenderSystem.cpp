@@ -25,18 +25,20 @@ void RenderSystem::Initialize() {
 	m_shaders.push_back(defaultShad);
 	m_shaders.push_back(lightShad);
 
-	m_camera = g_coordinator.CreateEntity();
+	//m_camera = g_coordinator.CreateEntity();
+	//g_coordinator.AddComponent(m_camera, Camera{ .position = Vector3(0, 0, 10), .rotation = Vector3(0, 1, 0), .target = Vector3(0, 0, -1) });
 
-	g_coordinator.AddComponent(m_camera, Camera{ .position = Vector3(0, 0, 10), .rotation = Vector3(0, 1, 0), .target = Vector3(0, 0, -1) });
-
-	camera = g_coordinator.GetComponent<Camera>(m_camera);
-	camera.projection_matrix.SetToPerspective(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
+	//camera = g_coordinator.GetComponent<Camera>(m_camera);
+	//camera.projection_matrix.SetToPerspective(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
 
 
+	//for (Camera camera : cameras) {
+	//	camera.projection_matrix.SetToPerspective(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
+	//	activeCamera = camera;
+	//}
 }
 
-void RenderSystem::Update(double dt) {
-
+void RenderSystem::Update(double dt, Camera& camera) {
 	// Camera
 	if (Application::IsKeyPressed('W')) {
 		camera.position += 2.0f * camera.target * dt;

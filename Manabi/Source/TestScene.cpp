@@ -4,7 +4,6 @@
 //#include "Shader.h"
 
 #include "../Components/Renderer.h"
-#include "../Components/Camera.hpp"
 #include "../Components/Transform.hpp"
 #include "../Components/Rigidbody.hpp"
 #include "../Components/Collider.hpp";
@@ -62,8 +61,14 @@ void TestScene::Initialize() {
 		g_coordinator.SetSystemSignature<CameraControlSystem>(signature);
 	}
 
-	// Register Entities
-
+	//// Register Entities
+	//Camera
+	auto sceneCamera = g_coordinator.CreateEntity();
+	g_coordinator.AddComponent(sceneCamera, Camera{ .isActive = true, .position = Vector3(0, 0, 10), .rotation = Vector3(0, 1, 0), .target = Vector3(0, 0, -1) });
+	Camera sceneCam = g_coordinator.GetComponent<Camera>(sceneCamera);
+	sceneCam.projection_matrix.SetToPerspective(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
+	m_cameras.push_back(sceneCam);
+	activeCamera = sceneCam;
 	//{
 	//	Entity box1 = g_coordinator.CreateEntity();
 
@@ -199,10 +204,18 @@ void TestScene::Initialize() {
 }
 
 void TestScene::Update(double dt) {
+
+	if (!activeCamera.isActive) {
+		for (Camera camera : m_cameras) {
+			if (camera.isActive)
+				activeCamera = camera;
+		}
+	}
+
 	transformSystem->Update(dt);
 	cameraControlSystem->Update(dt);
 	physicsSystem->Update(dt);
-	renderSystem->Update(dt);
+	renderSystem->Update(dt, activeCamera);
 }
 
 void TestScene::Exit() {

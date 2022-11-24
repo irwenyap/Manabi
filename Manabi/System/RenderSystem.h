@@ -16,13 +16,15 @@ class RenderSystem : public System {
 	};
 public:
 	void Initialize();
-	void Update(double dt);
+	void Update(double dt, Camera& camera);
 	void Exit();
 
-	Entity m_camera;
-	Camera camera;
-
+	//Entity m_camera;
+	//Camera m_cameras[] = { 0 }; 
+	//std::vector<Camera> m_cameras;
+	//Camera &activeCamera;
 	std::vector<Shader*> m_shaders;
+
 };
 
 

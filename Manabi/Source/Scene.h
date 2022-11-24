@@ -3,6 +3,8 @@
 
 //Coordinator g_coordinator;
 
+#define MAX_CAMERA	8
+
 class Scene {
 public:
 	Scene() {}

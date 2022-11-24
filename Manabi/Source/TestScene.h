@@ -12,6 +12,7 @@
 #include "../System/CameraControlSystem.h"
 #include "../System/PlayerControlSystem.h"
 
+#include "../Components/Camera.hpp"
 
 class TestScene : public Scene {
 public:
@@ -23,6 +24,9 @@ public:
 	virtual void Exit();
 
 private:
+	std::vector<Camera> m_cameras;
+	Camera activeCamera;
+
 	std::shared_ptr<RenderSystem> renderSystem;
 	std::shared_ptr<TransformSystem> transformSystem;
 	std::shared_ptr<PhysicsSystem> physicsSystem;
