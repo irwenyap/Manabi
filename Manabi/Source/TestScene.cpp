@@ -64,7 +64,8 @@ void TestScene::Initialize() {
 	//// Register Entities
 	//Camera
 	auto sceneCamera = g_coordinator.CreateEntity();
-	g_coordinator.AddComponent(sceneCamera, Camera{ .isActive = true, .position = Vector3(0, 0, 10), .rotation = Vector3(0, 1, 0), .target = Vector3(0, 0, -1) });
+	g_coordinator.AddComponent(sceneCamera, Transform{ .position = Vector3(0, 0, 10), .rotation = Vector3(0, 1, 0) });
+	g_coordinator.AddComponent(sceneCamera, Camera{ .entity = sceneCamera, .isActive = true, .target = Vector3(0, 0, -1) });
 	Camera sceneCam = g_coordinator.GetComponent<Camera>(sceneCamera);
 	sceneCam.projection_matrix.SetToPerspective(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
 	m_cameras.push_back(sceneCam);
@@ -213,7 +214,7 @@ void TestScene::Update(double dt) {
 	}
 
 	transformSystem->Update(dt);
-	cameraControlSystem->Update(dt);
+	cameraControlSystem->Update(dt, activeCamera);
 	physicsSystem->Update(dt);
 	renderSystem->Update(dt, activeCamera);
 }

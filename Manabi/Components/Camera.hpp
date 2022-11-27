@@ -2,11 +2,15 @@
 #define CAMERA_HPP
 
 #include "Mtx44.h"
+#include "../Source/Entity.h"
 
 struct Camera {
+	Entity entity;
+
 	bool isActive;
 
 	Mtx44 projection_matrix;
+	
 
 	Vector3 position;
 	Vector3 rotation;

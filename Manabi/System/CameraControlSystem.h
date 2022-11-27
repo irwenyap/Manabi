@@ -7,10 +7,7 @@
 class CameraControlSystem : public System {
 public:
 	void Initialize();
-	void Update(double dt);
+	void Update(double dt, Camera& camera);
 	void Exit();
-
-	//std::vector<Transform> m_cameras;
-	//std::vector<Camera> m_cameras;
 };
 
