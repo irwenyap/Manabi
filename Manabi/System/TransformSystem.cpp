@@ -39,4 +39,9 @@ void TransformSystem::Update(double dt) {
 }
 
 void TransformSystem::Exit() {
+	for (auto const& entity : m_entities) {
+		Transform transform = g_coordinator.GetComponent<Transform>(entity);
+		if (transform.parent)
+			delete(transform.parent);
+	}
 }

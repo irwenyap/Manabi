@@ -39,7 +39,6 @@ void RenderSystem::Update(double dt, Camera& camera) {
 		camera.up.x, camera.up.y, camera.up.z);
 
 	for (auto const& entity : m_entities) {
-		//Mtx44 modelTrans, modelRot, modelScale, model;
 		Transform &transform = g_coordinator.GetComponent<Transform>(entity);
 		Material *material = g_coordinator.GetComponent<Renderer>(entity).material;
 		int shaderIndex = material->m_shaderIndex;
@@ -68,5 +67,15 @@ void RenderSystem::Update(double dt, Camera& camera) {
 }
 
 void RenderSystem::Exit() {
+	
+	for (int i = 0; i < m_shaders.size(); ++i)
+		delete(m_shaders[i]);
+
 	m_shaders.clear();
+
+	for (auto const& entity : m_entities) {
+		Renderer renderer = g_coordinator.GetComponent<Renderer>(entity);
+		delete(renderer.material);
+		delete(renderer.model);
+	}
 }

@@ -46,6 +46,11 @@ void PhysicsSystem::Update(double dt) {
 }
 
 void PhysicsSystem::Exit() {
+	//for (auto const& entity : m_entities) {
+	//	Collider& col = g_coordinator.GetComponent<Collider>(entity);
+	//	if (col.transform)
+	//		delete(col.transform);
+	//}
 }
 
 bool PhysicsSystem::CheckCollision(Collider& c1, Collider& c2) {

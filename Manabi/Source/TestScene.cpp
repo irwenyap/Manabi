@@ -7,12 +7,17 @@
 #include "../Components/Transform.hpp"
 #include "../Components/Rigidbody.hpp"
 #include "../Components/Collider.hpp";
+#include "../Components/CameraController.h";
+#include "../Components/PlayerController.hpp";
+
+#include "Application.h"
 
 #include <iostream>
 
 Coordinator g_coordinator;
 
 TestScene::TestScene() {
+	cameraIndex = 0;
 }
 
 TestScene::~TestScene() {
@@ -22,10 +27,16 @@ void TestScene::Initialize() {
 	g_coordinator.Initialize();
 
 	g_coordinator.RegisterComponent<Transform>();
+
 	g_coordinator.RegisterComponent<Renderer>();
-	g_coordinator.RegisterComponent<Camera>();
+
 	g_coordinator.RegisterComponent<Rigidbody>();
 	g_coordinator.RegisterComponent<Collider>();
+
+	g_coordinator.RegisterComponent<Camera>();
+	g_coordinator.RegisterComponent<CameraController>();
+
+	g_coordinator.RegisterComponent<PlayerController>();
 
 	// Register System
 
@@ -58,18 +69,41 @@ void TestScene::Initialize() {
 		Signature signature;
 		signature.set(g_coordinator.GetComponentType<Transform>());
 		signature.set(g_coordinator.GetComponentType<Camera>());
+		signature.set(g_coordinator.GetComponentType<CameraController>());
 		g_coordinator.SetSystemSignature<CameraControlSystem>(signature);
 	}
 
+	playerControlSystem = g_coordinator.RegisterSystem<PlayerControlSystem>();
+	{
+		Signature signature;
+		signature.set(g_coordinator.GetComponentType<Transform>());
+		//signature.set(g_coordinator.GetComponentType<Renderer>());
+		signature.set(g_coordinator.GetComponentType<Camera>());
+		signature.set(g_coordinator.GetComponentType<PlayerController>());
+		g_coordinator.SetSystemSignature<PlayerControlSystem>(signature);
+	}
+
 	//// Register Entities
-	//Camera
+	// Camera
 	auto sceneCamera = g_coordinator.CreateEntity();
-	g_coordinator.AddComponent(sceneCamera, Transform{ .position = Vector3(0, 0, 10), .rotation = Vector3(0, 1, 0) });
-	g_coordinator.AddComponent(sceneCamera, Camera{ .entity = sceneCamera, .isActive = true, .target = Vector3(0, 0, -1) });
-	Camera sceneCam = g_coordinator.GetComponent<Camera>(sceneCamera);
+	g_coordinator.AddComponent(sceneCamera, Transform{ .position = Vector3(0, 0, -10), .rotation = Vector3(0, 1, 0) });
+	g_coordinator.AddComponent(sceneCamera, Camera{ .entity = sceneCamera, .isActive = true, .target = Vector3(0, 0, 1) });
+	g_coordinator.AddComponent(sceneCamera, CameraController());
+
+	Camera &sceneCam = g_coordinator.GetComponent<Camera>(sceneCamera);
 	sceneCam.projection_matrix.SetToPerspective(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
 	m_cameras.push_back(sceneCam);
-	activeCamera = sceneCam;
+
+	// Player
+	auto player = g_coordinator.CreateEntity();
+	g_coordinator.AddComponent(player, Transform{ .position = Vector3(0, 0, 10), .rotation = Vector3(0, 1, 0) });
+	g_coordinator.AddComponent(player, Camera{ .entity = player, .isActive = false, .target = Vector3(0, 0, -1), .up = Vector3(0, 1, 0), .right = Vector3(1, 0, 0) });
+	g_coordinator.AddComponent(player, PlayerController());
+
+	Camera &playerCam = g_coordinator.GetComponent<Camera>(player);
+	playerCam.projection_matrix.SetToPerspective(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
+	m_cameras.push_back(playerCam);
+
 	//{
 	//	Entity box1 = g_coordinator.CreateEntity();
 
@@ -206,21 +240,44 @@ void TestScene::Initialize() {
 
 void TestScene::Update(double dt) {
 
-	if (!activeCamera.isActive) {
-		for (Camera camera : m_cameras) {
-			if (camera.isActive)
-				activeCamera = camera;
-		}
+	// Switching of Cameras
+	
+	if (Application::IsKeyPressed('Q') && cameraIndex > 0) {
+		//activeCamera.isActive = false;
+		--cameraIndex;
+		//activeCamera = m_cameras[cameraIndex];
+	} else if (Application::IsKeyPressed('E') && cameraIndex < m_cameras.size() - 1) {
+		//activeCamera.isActive = false;
+		++cameraIndex;
+		//activeCamera = m_cameras[cameraIndex];
 	}
 
+	//if (!activeCamera.isActive) {
+	//	for (Camera camera : m_cameras) {
+	//		if (camera.isActive)
+	//			activeCamera = camera;
+	//	}
+	//}
+
 	transformSystem->Update(dt);
-	cameraControlSystem->Update(dt, activeCamera);
+	cameraControlSystem->Update(dt);
 	physicsSystem->Update(dt);
-	renderSystem->Update(dt, activeCamera);
+	renderSystem->Update(dt, m_cameras[cameraIndex]);
 }
 
 void TestScene::Exit() {
+	//for (int i = 0; i < m_cameras.size(); ++i)
+	//	free(&m_cameras[i]);
+	m_cameras.clear();
+
 	cameraControlSystem->Exit();
 	physicsSystem->Exit();
 	renderSystem->Exit();
+	transformSystem->Exit();
+
+	playerControlSystem.reset();
+	cameraControlSystem.reset();
+	physicsSystem.reset();
+	renderSystem.reset();
+	transformSystem.reset();
 }

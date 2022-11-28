@@ -44,6 +44,12 @@ void Application::Run() {
 
 		m_context->SwapBuffers();
 		glfwPollEvents();
+
+		if (Application::IsKeyPressed('P')) {
+			scene->Exit();
+			delete(scene);
+			break;
+		}
 	}
 }
 

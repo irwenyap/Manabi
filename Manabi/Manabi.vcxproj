@@ -152,6 +152,8 @@
     <ClCompile Include="System\TransformSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Components\CameraController.h" />
+    <ClInclude Include="Components\PlayerController.hpp" />
     <ClInclude Include="System\CameraControlSystem.h" />
     <ClInclude Include="Components\Camera.hpp" />
     <ClInclude Include="Components\Collider.hpp" />

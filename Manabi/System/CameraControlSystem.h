@@ -7,7 +7,7 @@
 class CameraControlSystem : public System {
 public:
 	void Initialize();
-	void Update(double dt, Camera& camera);
+	void Update(double dt);
 	void Exit();
 };
 
