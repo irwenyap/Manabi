@@ -27,7 +27,6 @@ public:
 
 private:
 	std::vector<std::reference_wrapper<Camera>> m_cameras;
-	//Camera activeCamera;
 	int cameraIndex;
 
 	std::shared_ptr<RenderSystem> renderSystem;

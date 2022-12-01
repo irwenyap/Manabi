@@ -11,7 +11,7 @@ struct Collider {
 	};
 	COLLIDER_TYPE type;
 
-	Transform* transform;
+	Transform* parent;
 	Vector3 center;
 	Vector3 size;
 };

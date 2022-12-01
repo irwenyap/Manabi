@@ -9,7 +9,7 @@ extern Coordinator g_coordinator;
 void PhysicsSystem::Initialize() {
 	for (auto const& entity : m_entities) {
 		Collider& col = g_coordinator.GetComponent<Collider>(entity);
-		col.transform = &g_coordinator.GetComponent<Transform>(entity);
+		col.parent = &g_coordinator.GetComponent<Transform>(entity);
 	}
 }
 
@@ -53,8 +53,10 @@ void PhysicsSystem::Exit() {
 	//}
 }
 
+//void 
+
 bool PhysicsSystem::CheckCollision(Collider& c1, Collider& c2) {
-	Vector3 vDist = c1.transform->position - c2.transform->position;
+	Vector3 vDist = c1.parent->position - c2.parent->position;
 	return !(GetSeparatingPlane(vDist, Vector3(1, 0, 0), c1, c2) ||
 		GetSeparatingPlane(vDist, Vector3(0, 1, 0), c1, c2) ||
 		GetSeparatingPlane(vDist, Vector3(0, 0, 1), c1, c2) ||
@@ -90,8 +92,8 @@ void PhysicsSystem::CollisionResponse(Rigidbody& r1, Collider& c1, Rigidbody& r2
 		switch (c2.type) {
 			case Collider::COLLIDER_BOX:
 				r1.velocity.SetZero();
-				Vector3 normal = r1.position - r2.position;
-				float dist = 1 - (r1.position.y - r2.position.y);
+				Vector3 normal = (r1.position - r2.position).Normalize();
+				float dist = (c2.size.y / 2 + c1.size.y / 2) - (r1.position.y - r2.position.y);
 				r1.position += normal * dist;
 		}
 		break;

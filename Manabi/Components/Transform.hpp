@@ -4,6 +4,8 @@
 #include "Vector3.h"
 
 struct Transform {
+	Transform* parent;
+
 	Vector3 position;
 	Vector3 rotation;
 	Vector3 scale;
@@ -12,7 +14,6 @@ struct Transform {
 	Vector3 localRotation;
 	Vector3 localScale;
 
-	Transform* parent;
 
 	Mtx44 localToWorldMatrix;
 	Mtx44 worldToLocalMatrix;
