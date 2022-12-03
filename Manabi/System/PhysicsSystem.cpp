@@ -107,3 +107,9 @@ void PhysicsSystem::CollisionResponse(Rigidbody& r1, Collider& c1, Rigidbody& r2
 
 	//}
 }
+
+void PhysicsSystem::AddForce(Vector3 force, Entity entity) {
+	auto& rb = g_coordinator.GetComponent<Rigidbody>(entity);
+
+	rb.velocity += force;
+}

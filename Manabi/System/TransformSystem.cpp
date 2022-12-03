@@ -16,12 +16,12 @@ void TransformSystem::Initialize() {
 			modelTrans.SetToTranslation(transform.position.x, transform.position.y, transform.position.z);
 			modelRot.SetToIdentity();
 			modelScale.SetToScale(transform.scale.x, transform.scale.y, transform.scale.z);
-			transform.localToWorldMatrix = transform.parent->localToWorldMatrix * (modelScale * modelRot * modelTrans);
+			transform.localToWorldMatrix = transform.parent->localToWorldMatrix * (modelTrans * modelRot * modelScale);
 		} else {
 			modelTrans.SetToTranslation(transform.position.x, transform.position.y, transform.position.z);
 			modelRot.SetToIdentity();
 			modelScale.SetToScale(transform.scale.x, transform.scale.y, transform.scale.z);
-			transform.localToWorldMatrix = modelScale * modelRot * modelTrans;
+			transform.localToWorldMatrix = modelTrans * modelRot * modelScale;
 		}
 	}
 }
@@ -35,12 +35,13 @@ void TransformSystem::Update(double dt) {
 			modelTrans.SetToTranslation(transform.position.x, transform.position.y, transform.position.z);
 			modelRot.SetToIdentity();
 			modelScale.SetToScale(transform.scale.x, transform.scale.y, transform.scale.z);
-			transform.localToWorldMatrix = transform.parent->localToWorldMatrix * (modelScale * modelRot * modelTrans);
+			transform.localToWorldMatrix = transform.parent->localToWorldMatrix * (modelTrans * modelRot * modelScale);
 		} else {
 			modelTrans.SetToTranslation(transform.position.x, transform.position.y, transform.position.z);
 			modelRot.SetToIdentity();
 			modelScale.SetToScale(transform.scale.x, transform.scale.y, transform.scale.z);
-			transform.localToWorldMatrix = modelScale * modelRot * modelTrans;
+			//transform.localToWorldMatrix = modelScale * modelRot * modelTrans;
+			transform.localToWorldMatrix = modelTrans * modelRot * modelScale;
 		}
 	}
 }

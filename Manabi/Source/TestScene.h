@@ -25,6 +25,8 @@ public:
 	virtual void Update(double dt);
 	virtual void Exit();
 
+
+	float bt;
 private:
 	std::vector<std::reference_wrapper<Camera>> m_cameras;
 	int cameraIndex;
