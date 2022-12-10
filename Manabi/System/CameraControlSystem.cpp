@@ -34,7 +34,7 @@ void CameraControlSystem::Update(double dt) {
 		if (Application::IsKeyPressed('D')) {
 			transform.position -= 2.0f * camera.right * dt;
 		}
-
+		 
 		{
 			float xPos = static_cast<float>(Application::mouse_current_x);
 			float yPos = static_cast<float>(Application::mouse_current_y);
@@ -48,21 +48,23 @@ void CameraControlSystem::Update(double dt) {
 			xOffSet *= sensitivity;
 			yOffSet *= sensitivity;
 
-			camera.yaw += xOffSet;
-			camera.pitch += yOffSet;
+			//camera.yaw += xOffSet;
+			//camera.pitch += yOffSet;
+			transform.rotation.y += xOffSet;
+			transform.rotation.x += yOffSet;
+
+			if (transform.rotation.x > 89.0f)
+				transform.rotation.x = 89.0f;
+			if (transform.rotation.x < -89.0f)
+				transform.rotation.x = -89.0f;
+
+			Vector3 forward;
+			forward.x = cos(Math::DegreeToRadian(transform.rotation.y)) * cos(Math::DegreeToRadian(transform.rotation.x));
+			forward.y = sin(Math::DegreeToRadian(transform.rotation.x));
+			forward.z = sin(Math::DegreeToRadian(transform.rotation.y)) * cos(Math::DegreeToRadian(transform.rotation.x));
 
 
-			if (camera.pitch > 89.0f)
-				camera.pitch = 89.0f;
-			if (camera.pitch < -89.0f)
-				camera.pitch = -89.0f;
-
-			Vector3 front;
-			front.x = cos(Math::DegreeToRadian(camera.yaw)) * cos(Math::DegreeToRadian(camera.pitch));
-			front.y = sin(Math::DegreeToRadian(camera.pitch));
-			front.z = sin(Math::DegreeToRadian(camera.yaw)) * cos(Math::DegreeToRadian(camera.pitch));
-
-			camera.target = front.Normalize();
+			camera.target = forward.Normalize();
 
 			camera.right = Vector3(0, 1, 0).Cross(camera.target).Normalize();
 			camera.up = camera.target.Cross(camera.right).Normalize();

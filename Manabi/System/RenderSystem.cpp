@@ -34,6 +34,7 @@ void RenderSystem::Update(double dt, Camera& camera) {
 
 	Mtx44 view;
 	view.SetToIdentity();
+	// PROBLEM
 	view.SetToLookAt(camTransform.position.x, camTransform.position.y, camTransform.position.z,
 		camTransform.position.x + camera.target.x, camTransform.position.y + camera.target.y, camTransform.position.z + camera.target.z,
 		camera.up.x, camera.up.y, camera.up.z);

@@ -11,7 +11,6 @@ struct Camera {
 
 	Mtx44 projection_matrix;
 	
-
 	Vector3 position;
 	Vector3 rotation;
 
@@ -19,7 +18,7 @@ struct Camera {
 	Vector3 up;
 	Vector3 right;
 
-	float yaw, pitch;
+	//float yaw, pitch;
 	float lastX, lastY;
 };
 

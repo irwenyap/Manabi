@@ -95,23 +95,24 @@ void TestScene::Initialize() {
 	m_cameras.push_back(sceneCam);
 
 	// Player
-	//{
-	//	auto player = g_coordinator.CreateEntity();
-	//	auto playerCamera = g_coordinator.CreateEntity();
-	//	g_coordinator.AddComponent(player, Transform{ .position = Vector3(0, 0, 10), .rotation = Vector3(0, 1, 0), .scale = Vector3(1, 1, 1) });
-	//	g_coordinator.AddComponent(player, PlayerController{ .isGrounded = true, .isJumping = false, .playerSpeed = 10.f, .playerCamera = playerCamera });
-	//	Transform& playerTransform = g_coordinator.GetComponent <Transform>(player);
+	{
+		auto player = g_coordinator.CreateEntity();
+		auto playerCamera = g_coordinator.CreateEntity();
+		g_coordinator.AddComponent(player, Transform{ .position = Vector3(0, 0, 10), .rotation = Vector3(0, 1, 0), .scale = Vector3(1, 1, 1) });
+		g_coordinator.AddComponent(player, PlayerController{ .isGrounded = true, .isJumping = false, .playerSpeed = 10.f, .playerCamera = playerCamera });
+		Transform& playerTransform = g_coordinator.GetComponent <Transform>(player);
 
 
-	//	g_coordinator.AddComponent(playerCamera, Transform{ .parent = &playerTransform, .position = Vector3(0, 0, 0), .rotation = Vector3(0, 1, 0), .scale = Vector3(1, 1, 1) });
-	//	g_coordinator.AddComponent(playerCamera, Camera{ .entity = playerCamera, .isActive = false, .target = Vector3(0, 0, -1), .up = Vector3(0, 1, 0), .right = Vector3(1, 0, 0) });
+		g_coordinator.AddComponent(playerCamera, Transform{ .parent = &playerTransform, .localPosition = Vector3(0, 0, 0), .localRotation = Vector3(0, 1, 0), .localScale = Vector3(1, 1, 1) });
+		g_coordinator.AddComponent(playerCamera, Camera{ .entity = playerCamera, .isActive = false, .target = Vector3(0, 0, -1), .up = Vector3(0, 1, 0), .right = Vector3(1, 0, 0) });
 
-	//	Camera& playerCam = g_coordinator.GetComponent<Camera>(playerCamera);
+		Camera& playerCam = g_coordinator.GetComponent<Camera>(playerCamera);
 
-	//	Transform& test = g_coordinator.GetComponent<Transform>(playerCamera);
-	//	playerCam.projection_matrix.SetToPerspective(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
-	//	m_cameras.push_back(playerCam);
-	//}
+
+		Transform& test = g_coordinator.GetComponent<Transform>(playerCamera);
+		playerCam.projection_matrix.SetToPerspective(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
+		m_cameras.push_back(playerCam);
+	}
 
 
 
@@ -176,20 +177,20 @@ void TestScene::Initialize() {
 	//	g_coordinator.AddComponent(box, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 1, 1) });
 	//}
 
-	{
-		Entity floor = g_coordinator.CreateEntity();
-		g_coordinator.AddComponent(floor, Transform{ .position = Vector3(0, 10, 0), .scale = Vector3(1, 1, 1) });
-		g_coordinator.AddComponent(floor, Renderer{
-			.model = new Model("./Models/Cube/cube.obj"),
-			.material = new Material(0, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
+	//{
+	//	Entity floor = g_coordinator.CreateEntity();
+	//	g_coordinator.AddComponent(floor, Transform{ .position = Vector3(0, 10, 0), .scale = Vector3(1, 1, 1) });
+	//	g_coordinator.AddComponent(floor, Renderer{
+	//		.model = new Model("./Models/Cube/cube.obj"),
+	//		.material = new Material(0, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
 
-		g_coordinator.AddComponent(floor, Rigidbody{
-			.useGravity = true, .detectCollisions = true,
-			.position = Vector3(0, 10, 0),
-			.mass = 10.0f });
+	//	g_coordinator.AddComponent(floor, Rigidbody{
+	//		.useGravity = true, .detectCollisions = true,
+	//		.position = Vector3(0, 10, 0),
+	//		.mass = 10.0f });
 
-		g_coordinator.AddComponent(floor, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 1, 1) });
-	}
+	//	g_coordinator.AddComponent(floor, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 1, 1) });
+	//}
 
 	//{
 	//	Entity floor = g_coordinator.CreateEntity();
@@ -206,31 +207,31 @@ void TestScene::Initialize() {
 	//	g_coordinator.AddComponent(floor, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 4, 1) });
 	//}
 
-	//{
-	//	Entity mercy = g_coordinator.CreateEntity();
-	//	g_coordinator.AddComponent(mercy, Transform{ .position = Vector3(0, 0, -5), .scale = Vector3(1, 1, 1) });
-	//	g_coordinator.AddComponent(mercy, Renderer{
-	//		.model = new Model("./Models/Mercy/mercy.obj"),
-	//		.material = new Material(0, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
+	{
+		Entity mercy = g_coordinator.CreateEntity();
+		g_coordinator.AddComponent(mercy, Transform{ .position = Vector3(0, 0, 0), .scale = Vector3(1, 1, 1) });
+		g_coordinator.AddComponent(mercy, Renderer{
+			.model = new Model("./Models/Mercy/mercy.obj"),
+			.material = new Material(0, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
 
-	//	g_coordinator.AddComponent(mercy, Rigidbody{
-	//		.useGravity = true, .detectCollisions = true,
-	//		.isKinematic = false, .position = Vector3(0, 0, -5),
-	//		.mass = 10.0f });
+		g_coordinator.AddComponent(mercy, Rigidbody{
+			.useGravity = true, .detectCollisions = true,
+			.isKinematic = false, .position = Vector3(0, 15, 0),
+			.mass = 10.0f });
 
-	//	g_coordinator.AddComponent(mercy, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 10, 1) });
-	//}
+		g_coordinator.AddComponent(mercy, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(1, 1, 1) });
+	}
 
 	{
 		Entity floor = g_coordinator.CreateEntity();
-		g_coordinator.AddComponent(floor, Transform{ .position = Vector3(0, 0, 0), .scale = Vector3(3, 0.5, 3) });
+		g_coordinator.AddComponent(floor, Transform{ .position = Vector3(0, 0, 0), .rotation = Vector3(0, 45, 0), .scale = Vector3(3, 0.5, 3)});
 		g_coordinator.AddComponent(floor, Renderer{
 			.model = new Model("./Models/Cube/cube.obj"),
 			.material = new Material(0, Vector3(1.0f, 0.5f, 0.31f), Vector3(1.0f, 0.5f, 0.31f), Vector3(0.5f, 0.5f, 0.5f), 32.0f) });
 
 		g_coordinator.AddComponent(floor, Rigidbody{
 			.useGravity = false, .detectCollisions = true,
-			.position = Vector3(0, -5, 0),
+			.position = Vector3(0, 0, 0),
 			.mass = 10.0f });
 
 		g_coordinator.AddComponent(floor, Collider{ .type = Collider::COLLIDER_BOX, .size = Vector3(3, 0.5, 3) });
