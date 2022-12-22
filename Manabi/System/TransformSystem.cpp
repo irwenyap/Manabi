@@ -18,7 +18,7 @@ void TransformSystem::Initialize() {
 			modelRotX.SetToRotation(transform.rotation.x, 1, 0, 0);
 			modelRotY.SetToRotation(transform.rotation.y, 0, 1, 0);
 			modelRotZ.SetToRotation(transform.rotation.z, 0, 0, 1);
-			modelRot = modelRotX * modelRotY * modelRotZ;
+			modelRot = modelRotY * modelRotX * modelRotZ;
 
 			modelScale.SetToScale(transform.localScale.x, transform.localScale.y, transform.localScale.z);
 			transform.localToWorldMatrix = transform.parent->localToWorldMatrix * (modelTrans * modelRot * modelScale);
@@ -29,7 +29,7 @@ void TransformSystem::Initialize() {
 			modelRotX.SetToRotation(transform.rotation.x, 1, 0, 0);
 			modelRotY.SetToRotation(transform.rotation.y, 0, 1, 0);
 			modelRotZ.SetToRotation(transform.rotation.z, 0, 0, 1);
-			modelRot = modelRotX * modelRotY * modelRotZ;
+			modelRot = modelRotY * modelRotX * modelRotZ;
 
 			modelScale.SetToScale(transform.scale.x, transform.scale.y, transform.scale.z);
 			transform.localToWorldMatrix = modelTrans * modelRot * modelScale;
@@ -46,27 +46,28 @@ void TransformSystem::Update(double dt) {
 			modelTrans.SetToTranslation(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
 
 
-			modelRotX.SetToRotation(transform.rotation.x, 1, 0, 0);
-			modelRotY.SetToRotation(transform.rotation.y, 0, 1, 0);
-			modelRotZ.SetToRotation(transform.rotation.z, 0, 0, 1);
-			modelRot = modelRotX * modelRotY * modelRotZ;
+			modelRotX.SetToRotation(transform.localRotation.x, 1, 0, 0);
+			modelRotY.SetToRotation(transform.localRotation.y, 0, 1, 0);
+			modelRotZ.SetToRotation(transform.localRotation.z, 0, 0, 1);
+			modelRot = modelRotY * modelRotX * modelRotZ;
 
 			modelScale.SetToScale(transform.localScale.x, transform.localScale.y, transform.localScale.z);
 			transform.localToWorldMatrix = transform.parent->localToWorldMatrix * (modelTrans * modelRot * modelScale);
-			transform.position = Vector3(transform.localToWorldMatrix.a[13], transform.localToWorldMatrix.a[14], transform.localToWorldMatrix.a[15]);
+			//transform.localToWorldMatrix = transform.parent->localToWorldMatrix * (modelScale * modelRot * modelTrans);
+			transform.position = Vector3(transform.localToWorldMatrix.a[12], transform.localToWorldMatrix.a[13], transform.localToWorldMatrix.a[14]);
 		} else {
 			modelTrans.SetToTranslation(transform.position.x, transform.position.y, transform.position.z);
 
 			modelRotX.SetToRotation(transform.rotation.x, 1, 0, 0);
 			modelRotY.SetToRotation(transform.rotation.y, 0, 1, 0);
 			modelRotZ.SetToRotation(transform.rotation.z, 0, 0, 1);
-			modelRot = modelRotX * modelRotY * modelRotZ;
+			modelRot = modelRotY * modelRotX * modelRotZ;
 
 			modelScale.SetToScale(transform.scale.x, transform.scale.y, transform.scale.z);
 			transform.localToWorldMatrix = modelTrans * modelRot * modelScale;
 		}
 	}
-	ConvertWorldToLocalMatrix();
+	//ConvertWorldToLocalMatrix();
 }
 
 void TransformSystem::Exit() {

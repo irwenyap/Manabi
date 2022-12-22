@@ -11,7 +11,6 @@ struct Camera {
 
 	Mtx44 projection_matrix;
 	
-	Vector3 position;
 	Vector3 rotation;
 
 	Vector3 target;

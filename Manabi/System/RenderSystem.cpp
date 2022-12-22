@@ -18,12 +18,15 @@ extern Coordinator g_coordinator;
 void RenderSystem::Initialize() {
 	Shader* defaultShad = new Shader();
 	Shader* lightShad = new Shader();
+	Shader* noviewShad = new Shader();
 
 	defaultShad->Initialize("Shader/default.vert", "Shader/default.frag");
 	lightShad->Initialize("Shader/light.vert", "Shader/light.frag");
+	noviewShad->Initialize("Shader/noview.vert", "Shader/default.frag");
 
 	m_shaders.push_back(defaultShad);
 	m_shaders.push_back(lightShad);
+	m_shaders.push_back(noviewShad);
 }
 
 void RenderSystem::Update(double dt, Camera& camera) {

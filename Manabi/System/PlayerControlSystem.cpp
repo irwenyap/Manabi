@@ -14,65 +14,79 @@ void PlayerControlSystem::Initialize() {
 
 void PlayerControlSystem::Update(double dt) {
 	for (auto& entity : m_entities) {
-		auto& cameraEntity = g_coordinator.GetComponent<PlayerController>(entity).playerCamera;
-		auto& camera = g_coordinator.GetComponent<Camera>(cameraEntity);
+		Entity cameraEntity = g_coordinator.GetComponent<PlayerController>(entity).playerCamera;
+		Camera& camera = g_coordinator.GetComponent<Camera>(cameraEntity);
 		if (camera.isActive) {
-			auto& transform = g_coordinator.GetComponent<Transform>(entity);
+			Transform& transform = g_coordinator.GetComponent<Transform>(entity);
 
-			//if (Application::IsKeyPressed('W')) {
-			//	transform.position += 4 * camera.target * dt;
-			//}
+			float dirX = cos(Math::DegreeToRadian(camera.rotation.y));
+			float dirZ = sin(Math::DegreeToRadian(camera.rotation.y));
 
-			//Transform& transform = g_coordinator.GetComponent<Transform>(camera.entity);
+			Vector3 dir = Vector3(dirX, 0, dirZ);
 
 			if (Application::IsKeyPressed('W')) {
-				transform.position += 2.0f * camera.target * dt;
+				transform.position += 2.0f * dir * dt;
 			}
 			if (Application::IsKeyPressed('A')) {
 				transform.position += 2.0f * camera.right * dt;
 			}
 			if (Application::IsKeyPressed('S')) {
-				transform.position -= 2.0f * camera.target * dt;
+				transform.position -= 2.0f * dir * dt;
 			}
 			if (Application::IsKeyPressed('D')) {
 				transform.position -= 2.0f * camera.right * dt;
+			}
+
+			if (Application::IsKeyPressed('G')) {
+				//auto& transform = g_coordinator.GetComponent<Transform>(5);
+				transform.rotation.y += 80 * dt;
 			}
 
 			{
 				float xPos = static_cast<float>(Application::mouse_current_x);
 				float yPos = static_cast<float>(Application::mouse_current_y);
 
-				float xOffSet = xPos - camera.lastX;
-				float yOffSet = camera.lastY - yPos;
+				float xCamOffSet = xPos - camera.lastX;
+				float yCamOffSet = camera.lastY - yPos;
+				float xOffSet = camera.lastX - xPos;
+				float yOffSet = yPos - camera.lastY;
+
 				camera.lastX = xPos;
 				camera.lastY = yPos;
 
 				float sensitivity = 0.1f;
 				xOffSet *= sensitivity;
 				yOffSet *= sensitivity;
+				xCamOffSet *= sensitivity;
+				yCamOffSet *= sensitivity;
 
-				camera.yaw += xOffSet;
-				camera.pitch += yOffSet;
+				transform.rotation.y += xOffSet;
+				transform.rotation.x += yOffSet;
 
+				camera.rotation.y += xCamOffSet;
+				camera.rotation.x += yCamOffSet;
 
-				if (camera.pitch > 89.0f)
-					camera.pitch = 89.0f;
-				if (camera.pitch < -89.0f)
-					camera.pitch = -89.0f;
+				if (transform.rotation.x > 89.0f) {
+					transform.rotation.x = 89.0f;
+					camera.rotation.x = 89.0f;
+				}
+				if (transform.rotation.x < -89.0f) {
+					transform.rotation.x = -89.0f;
+					camera.rotation.x = -89.0f;
+				}
 
-				Vector3 front;
-				front.x = cos(Math::DegreeToRadian(camera.yaw)) * cos(Math::DegreeToRadian(camera.pitch));
-				front.y = sin(Math::DegreeToRadian(camera.pitch));
-				front.z = sin(Math::DegreeToRadian(camera.yaw)) * cos(Math::DegreeToRadian(camera.pitch));
+				Vector3 forward;
+				forward.x = dirX * cos(Math::DegreeToRadian(camera.rotation.x));
+				forward.y = sin(Math::DegreeToRadian(camera.rotation.x));
+				forward.z = dirZ * cos(Math::DegreeToRadian(camera.rotation.x));
 
-				camera.target = front.Normalize();
+				camera.target = forward.Normalize();
 
 				camera.right = Vector3(0, 1, 0).Cross(camera.target).Normalize();
 				camera.up = camera.target.Cross(camera.right).Normalize();
 			}
 		}
 	}
-
 }
 
 void PlayerControlSystem::Exit() {

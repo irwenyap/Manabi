@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="System\GunControlSystem.cpp" />
     <ClCompile Include="System\CameraControlSystem.cpp" />
     <ClCompile Include="System\PlayerControlSystem.cpp" />
     <ClCompile Include="Scenes\SceneLevelTwo.cpp" />
@@ -152,8 +153,11 @@
     <ClCompile Include="System\TransformSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Components\Bullet.h" />
     <ClInclude Include="Components\CameraController.h" />
+    <ClInclude Include="Components\Gun.h" />
     <ClInclude Include="Components\PlayerController.hpp" />
+    <ClInclude Include="System\GunControlSystem.h" />
     <ClInclude Include="System\CameraControlSystem.h" />
     <ClInclude Include="Components\Camera.hpp" />
     <ClInclude Include="Components\Collider.hpp" />

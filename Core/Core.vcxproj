@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Quaternion.cpp" />
     <ClCompile Include="Source\Logger.cpp" />
     <ClCompile Include="Source\MathUtility.cpp" />
     <ClCompile Include="Source\MatrixStack.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="Source\Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Quaternion.h" />
     <ClInclude Include="Source\Logger.h" />
     <ClInclude Include="Source\MathUtility.h" />
     <ClInclude Include="Source\MatrixStack.h" />
